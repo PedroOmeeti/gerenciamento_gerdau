@@ -13,22 +13,22 @@
   <div class="d-flex align-items-center" style="height: 100vh">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="card fundo" style="width: 38rem;">
+        <div class="card fundo border border-dark border-2" style="width: 38rem;">
           <img src="./assets/images/gerdau-logo.png" class="card-img-top d-block m-auto logo mt-3" alt="logo">
           <div class="card-body">
             <div class="col">
               <form>
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <label for="exampleInputEmail1" class="form-label fw-bold">Email</label>
+                  <input type="email" placeholder="Digite o seu email" class="form-control border border-dark border-2" id="exampleInputEmail1" aria-describedby="emailHelp">
                   <div id="emailHelp" class="form-text">Nunca compartilhe o seu e-mail com ninguém.</div>
                 </div>
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Senha</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
+                  <label for="exampleInputPassword1" class="form-label fw-bold ">Senha</label>
+                  <input type="password" placeholder="Digite a sua senha" class="form-control border border-dark border-2" id="exampleInputPassword1">
                 </div>
                 <!-- <button type="submit" class="btn corBotao text-white">Login</button> -->
-                <a href="./view/painel_adm_view.php" class="btn corBotao text-white">Login</a> 
+                <a href="./view/painel_adm_view.php" class="btn corBotao text-white fw-bold">Login</a> 
               </form>
             </div>
           </div>
