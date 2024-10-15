@@ -9,7 +9,7 @@
   <title>Painel</title>
 </head>
 
-<body>
+<body class="overflow-auto">
   <!-- Nav -->
   <?php
   require_once ('./components/Navbar.php');
