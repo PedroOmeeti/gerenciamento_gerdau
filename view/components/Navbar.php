@@ -12,7 +12,7 @@
           <a class="nav-link active" aria-current="page" href="#">Início</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Cardápio</a>
+          <a class="nav-link" href="cardapio_view.php">Cardápio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Estástisticas</a>
@@ -44,3 +44,4 @@
     </div>
   </div>
 </nav>
+
