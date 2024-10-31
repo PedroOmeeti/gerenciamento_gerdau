@@ -13,6 +13,23 @@ if (isset($_GET['id'])) {
   } else {
     $erro = 1;
   }
+
+  // Editar
+  if (isset($_GET['id'])) {
+    require_once('../model/actions/classes/prato_class.php');
+    $c = new Prato();
+    $c->id = $_GET['id'];
+    $resultado = $c->ListarPorID();
+    if (count($resultado) == 1) {
+      $resultado = $resultado[0];
+      // print_r($resultado);
+    } else {
+      $erro = 1;
+    }
+  } else {
+    $erro = 1;
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +46,7 @@ if (isset($_GET['id'])) {
     <?php require_once('./components/Navbar.php'); ?>
     <div class="container">
     <h1>Edição</h1>
-    <form action="actions/editar_produto.php" method="POST">
+    <form action="../model/actions/editar_prato.php" method="POST">
       <input type="hidden" name="id" value="<?= $resultado['id'] ?>" />
 
 
