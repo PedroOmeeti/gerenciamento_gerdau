@@ -60,6 +60,11 @@ if (isset($_GET['id'])) {
         <input type="text" value="<?= $resultado['descricao_prato'] ?>" class="form-control" id="descricao" name="descricao">
       </div>
 
+      <div class="form-group mt-3">
+        <label for="Imagem">Imagem</label>
+        <input type="file" value="<?= $resultado[''] ?>" class="form-control" id="imagem" name="imagem">
+      </div>
+
       <button type="submit" class="btn btn-primary mt-4">Editar</button>
     </form>
     </div>
