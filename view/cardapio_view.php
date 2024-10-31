@@ -1,10 +1,10 @@
 <?php
 require_once('../model/actions/classes/prato_class.php');
 $c = new Prato();
-$resultado = $c->Listar(); // Supondo que isso retorne um array de todos os pratos
+$resultado = $c->Listar(); // Rotorna um array, mas quero lista individualmente
 
 $dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
-// Exemplo: Mapear cada dia a um prato específico (você pode personalizar essa lógica)
+//Mapear os pratos de acordo com o dia da semana
 $dishesByDay = [];
 if (!empty($resultado)) {
     foreach ($resultado as $index => $prato) {
@@ -44,7 +44,7 @@ if (!empty($resultado)) {
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span><?php echo $dia; ?></span>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addRefeicaoModal" data-dia="<?php echo $dia; ?>">Adicionar Refeição</button>
+                                <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#addRefeicaoModal" onclick="window.location.href='editarCardapio_view.php?id=<?php echo htmlspecialchars($dishesByDay[$index]['id']); ?>'" data-dia="<?php echo $dia; ?>">Editar Refeição</button>
                             </div>
                             <div class="card-body">
                                 <div class="row">
