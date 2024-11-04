@@ -24,24 +24,26 @@
           <img src="./assets/images/gerdau-logo.png" class="card-img-top d-block m-auto logo mt-3" alt="logo">
           <div class="card-body">
             <div class="col">
-              <form>
-                <div>
-                  <h1 class="text-center fw-bold">Login</h1>
+              <form action="/gerenciamento_gerdau/model/actions/loginUsuario.php" method="POST">
+                <div class="text-center">
+                  <h1 class="fw-bold">Login</h1>
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label fw-bold">Email</label>
-                  <input type="email" placeholder="Digite o seu email" class="form-control border border-dark border-1" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <div id="emailHelp" class="form-text">Nunca compartilhe o seu e-mail com ninguém.</div>
+                  <input type="email" placeholder="Digite o seu email" class="form-control border border-dark border-1" name="email" id="email" aria-describedby="emailHelp" required>
+                  <div id="emailHelp" class="form-text">Nunca compartilhe o seu e-mail com ninguem.</div>
+                  
                 </div>
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label fw-bold ">Senha</label>
-                  <input type="password" placeholder="Digite a sua senha" class="form-control border border-dark border-1" id="exampleInputPassword1">
+                  <label for="exampleInputPassword1" class="form-label fw-bold">Senha</label>
+                  <input type="password" placeholder="Digite a sua senha" class="form-control border border-dark border-1" name="senha" id="senha" required>
                   <div class="text-end p-3">
                     <a href="#" class="text-decoration-none text-dark">Esqueceu a senha?</a>
                   </div>
-                  <div class="d-grid gap-2">
-                    <a href="./view/painel_adm_view.php" class="btn corBotao text-white fw-bold">Login</a>
-                  </div>
+                </div>
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn corBotao text-white fw-bold">Login</button>
+                </div>
               </form>
             </div>
           </div>

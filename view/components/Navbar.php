@@ -22,7 +22,7 @@
           <a class="nav-link dropdown-toggle text-decoration-none fs-5 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pedro Henrique</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
-            <li><a class="dropdown-item" href="#">Ajuda</a></li>
+            <li><a class="dropdown-item" href="../view/cadastrarUsuario_view.php">Adicoinar Usuário</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -30,7 +30,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Sair</a></li>
+            <li><a class="dropdown-item" href="../index.php">Sair</a></li>
           </ul>
         </li>
       </ul>

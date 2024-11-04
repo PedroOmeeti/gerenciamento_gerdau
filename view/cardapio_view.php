@@ -36,6 +36,9 @@ if (!empty($resultado)) {
 
         <div class="row">
             <h1 class="text-center mt-4">Gerenciamento do Cardápio Semanal</h1>
+            <div>
+                <button class="btn btn-primary" data-toggle="modal" onclick="window.location.href='adicionarRefeicao_view.php'">Adicionar Refeição</button>
+            </div>
             <div class="row mt-4">
                 <?php
                 $dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
@@ -43,8 +46,8 @@ if (!empty($resultado)) {
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <div class="card bg-body-tertiary">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span><?php echo $dia; ?></span>
-                                <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#addRefeicaoModal" onclick="window.location.href='editarCardapio_view.php?id=<?php echo htmlspecialchars($dishesByDay[$index]['id']); ?>'" data-dia="<?php echo $dia; ?>">Editar Refeição</button>
+                                <span class="fs-5 fw-bold""><?php echo $dia; ?></span>
+                                <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php?id=<?php echo htmlspecialchars($dishesByDay[$index]['id']); ?>'" data-dia="<?php echo $dia; ?>">Editar Refeição</button>
                                 
                             </div>
                             <div class="card-body">
