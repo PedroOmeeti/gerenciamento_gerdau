@@ -53,18 +53,18 @@ class Prato{
     //     return $linhas;
     // }
 
-    // public function Editar(){
-    //     $sql = "UPDATE produtos SET nome=?, descricao=?, id_categoria=?, estoque=?, preco=? WHERE id=?";
-    //     $conexao = Banco::conectar();
-    //     // Converter o comando sql (string) em um objeto:
-    //     $comando = $conexao->prepare($sql);
-    //     // Executa o comando:
-    //     $comando->execute([$this->nome, $this->descricao, $this->id_categoria, $this->estoque, $this->preco, $this->id]);
-    //     $linhas = $comando->rowCount();
-    //     Banco::desconectar();
-    //     // Retornar a qtd de linhas removidas:
-    //     return $linhas;
-    // }
+    public function Editar(){
+        $sql = "UPDATE pratos SET nome_prato=?, descricao_prato=? WHERE id=?";
+        $conexao = Banco::conectar();
+        // Converter o comando sql (string) em um objeto:
+        $comando = $conexao->prepare($sql);
+        // Executa o comando:
+        $comando->execute([$this->nome_prato, $this->descricao_prato, $this->id]);
+        $linhas = $comando->rowCount();
+        Banco::desconectar();
+        // Retornar a qtd de linhas removidas:
+        return $linhas;
+    }
 
     // public function ListarFoto(){
     //     $sql = "SELECT foto FROM produtoo WHERE id = ?";

@@ -1,10 +1,10 @@
 <?php
-require_once('../model/actions/classes/prato_class.php');
+require_once('../../model/actions/classes/prato_class.php');
 $c = new Prato();
-$resultado = $c->Listar(); // Supondo que isso retorne um array de todos os pratos
+$resultado = $c->Listar(); // Rotorna um array, mas quero lista individualmente
 
 $dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
-// Exemplo: Mapear cada dia a um prato específico (você pode personalizar essa lógica)
+//Mapear os pratos de acordo com o dia da semana
 $dishesByDay = [];
 if (!empty($resultado)) {
     foreach ($resultado as $index => $prato) {
@@ -25,8 +25,8 @@ if (!empty($resultado)) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-    <?php require_once('components/Navbar.php'); ?>
+<body class="">
+    <?php require_once('../components/Navbar.php'); ?>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -36,28 +36,32 @@ if (!empty($resultado)) {
 
         <div class="row">
             <h1 class="text-center mt-4">Gerenciamento do Cardápio Semanal</h1>
+            <div>
+                <button class="btn btn-primary" data-toggle="modal" onclick="window.location.href='adicionarRefeicao_view.php'">Adicionar Refeição</button>
+            </div>
             <div class="row mt-4">
                 <?php
                 $dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
                 foreach ($dias as $index => $dia): ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card">
+                        <div class="card bg-body-tertiary">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span><?php echo $dia; ?></span>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addRefeicaoModal" data-dia="<?php echo $dia; ?>">Adicionar Refeição</button>
+                                <span class="fs-5 fw-bold""><?php echo $dia; ?></span>
+                                <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php?id=<?php echo htmlspecialchars($dishesByDay[$index]['id']); ?>'" data-dia="<?php echo $dia; ?>">Editar Refeição</button>
+                                
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title">Almoço</h5>
+                                        <h5 class="card-title "><strong>Almoço, jantar e ceia</strong></h5>
                                     </div>
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <p>12:00</p>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="d-flex align-items-start">
-                                    <div class="flex-grow-1">
+                                    <div class="">
                                         <ul>
                                             <?php if (isset($dishesByDay[$index])): ?>
                                                 <li>
@@ -70,17 +74,18 @@ if (!empty($resultado)) {
                                         </ul>
                                     </div>
                                     <div>
-                                        <img src="../assets/images/comida.png" class="img-fluid">
+                                        <!-- <img src="../assets/images/comida.png" class="img-fluid"> -->
                                     </div>
+                                </div>
+                                <div class="card-footer border text-center">
+                                    <img src="../../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title">Janta</h5>
+                                    <h5 class="card-title "><strong>Speciale</strong></h5>
                                     </div>
-                                    <div class="col">
-                                        <p>19:00</p>
-                                    </div>
+                                    
                                 </div>
 
                                 <div class="d-flex align-items-start">
@@ -96,9 +101,10 @@ if (!empty($resultado)) {
                                             <?php endif; ?>
                                         </ul>
                                     </div>
-                                    <div>
-                                        <img src="../assets/images/comida.png" class="img-fluid">
-                                    </div>
+
+                                </div>
+                                <div class="card-footer border text-center">
+                                    <img src="../../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
                                 </div>
                             </div>
                         </div>
