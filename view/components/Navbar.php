@@ -1,11 +1,7 @@
-<?php
-
-?>
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary p-4">
+<nav class="navbar navbar-expand-lg bg-body-tertiary p-3">
   <div class="container">
     <div class="col-6">
-      <a class="navbar-brand" href="#"><img src="../assets/images/Gerdau_logo_nav2.png" class="logo" alt="Logo Gerdau"></a>
+      <a class="navbar-brand" href="../painel_adm_view.php"><img src="../assets/images/logo_grsa_cortado1.png" alt="Logo GRSA"></a>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
