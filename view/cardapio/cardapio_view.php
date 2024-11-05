@@ -1,5 +1,5 @@
 <?php
-require_once('../model/actions/classes/prato_class.php');
+require_once('../../model/actions/classes/prato_class.php');
 $c = new Prato();
 $resultado = $c->Listar(); // Rotorna um array, mas quero lista individualmente
 
@@ -26,7 +26,7 @@ if (!empty($resultado)) {
 </head>
 
 <body class="">
-    <?php require_once('./components/Navbar.php'); ?>
+    <?php require_once('../components/Navbar.php'); ?>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -78,7 +78,7 @@ if (!empty($resultado)) {
                                     </div>
                                 </div>
                                 <div class="card-footer border text-center">
-                                    <img src="../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
+                                    <img src="../../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -104,7 +104,7 @@ if (!empty($resultado)) {
 
                                 </div>
                                 <div class="card-footer border text-center">
-                                    <img src="../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
+                                    <img src="../../assets/images/comida.png" class="border border-dark border-3 img-fluid" width="150" alt="...">
                                 </div>
                             </div>
                         </div>

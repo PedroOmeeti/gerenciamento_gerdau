@@ -1,5 +1,5 @@
 <?php
-require_once('./classes/login_model.php');
+require_once('./classes/usuario_model.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? null;
@@ -18,7 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['email'] = $email;
         header('Location: ../../view/painel_adm_view.php');
     } else {
-        echo "Erro no login";
+        header("Location: /gerenciamento_gerdau/index.php?erro=1");
+        exit();
+        // echo "Erro no login";
+
     }
 }
 

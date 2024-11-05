@@ -10,8 +10,8 @@ class Usuario{
     public function Logar($email, $senha){
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/login.php";
         $dados = http_build_query(array(
-            "email_funcionario" => $email,
-            "senha_funcionario" => $senha,
+            "email_usuario" => $email,
+            "senha_usuario" => $senha,
         ));
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -30,11 +30,12 @@ class Usuario{
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        
+
         $resultado = json_decode($response, true);
         if (isset($resultado['token'])) {
-
+            
             $token = $resultado['token'];
+            setcookie('nome', $token->nome_funcionario, time() + 7200, "/");
             setcookie('token', $token, time() + 7200, "/");
 
             return true;
@@ -45,14 +46,14 @@ class Usuario{
     }
 
 
-    public function Cadastrar($nome, $email, $senha, $permissao){
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/cadastrarFuncionario.php";
+    public function Cadastrar($email, $senha, $nome, $permissao){
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/cadastrarUsuario.php";
 
         $dados = http_build_query(array(
-            "nome_funcionario" => $nome,
-            "email_funcionario" => $email,
-            "senha_funcionario" => $senha,
-            "permissao_funcionario" => $permissao,
+            "email_usuario" => $email,
+            "senha_usuario" => $senha,
+            "nome_usuario" => $nome,
+            "permissao_usuario" => $permissao,
         ));
     
         $ch = curl_init($url);

@@ -17,7 +17,7 @@
     <?php require_once('./components/Navbar.php'); ?>
     <div class="container">
     <h1>Edição</h1>
-    <form action="../model/actions/editar_prato.php" method="POST">
+    <form action="../../model/actions/editar_prato.php" method="POST">
 
       <div class="form-group">
         <label for="nome">Prato:</label>

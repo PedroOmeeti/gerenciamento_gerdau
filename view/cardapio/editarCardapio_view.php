@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['id'])) {
-    require_once('../model/actions/classes/prato_class.php');
+    require_once('../../model/actions/classes/prato_class.php');
     $c = new Prato();
     $c->id = $_GET['id'];
     $resultado = $c->ListarPorID();
@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
 
   // Editar
   if (isset($_GET['id'])) {
-    require_once('../model/actions/classes/prato_class.php');
+    require_once('../../model/actions/classes/prato_class.php');
     $c = new Prato();
     $c->id = $_GET['id'];
     $resultado = $c->ListarPorID();
@@ -46,7 +46,7 @@ if (isset($_GET['id'])) {
     <?php require_once('./components/Navbar.php'); ?>
     <div class="container">
     <h1>Edição</h1>
-    <form action="../model/actions/editar_prato.php" method="POST">
+    <form action="../../model/actions/editar_prato.php" method="POST">
       <input type="hidden" name="id" value="<?= $resultado['id'] ?>" />
 
 
