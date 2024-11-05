@@ -26,7 +26,7 @@ if (!empty($resultado)) {
 </head>
 
 <body>
-    <?php require_once('./components/Navbar.php'); ?>
+    <?php require_once('components/Navbar.php'); ?>
     <div class="container">
         <div class="row">
             <div class="col">
