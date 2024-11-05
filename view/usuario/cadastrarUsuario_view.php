@@ -15,9 +15,9 @@
 </head>
 
 <body>
-    <?php require_once('./components/Navbar.php'); ?>
+    <?php require_once('../components/Navbar.php'); ?>
     <div class="container">
-    <form action="../model/actions/cadastrarUsuario.php" method="POST">
+    <form action="../../model/actions/cadastrarUsuario.php" method="POST">
     <div class="form-group">
         <label for="nome">Nome:</label>
         <input type="text" class="form-control" id="nome" name="nome" required>
