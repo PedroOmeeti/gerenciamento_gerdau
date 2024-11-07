@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         <label for="permissao">Permissão:</label>
-        <select class="form-control" id="permissao" name="permissao" required>
+        <select class="form-control" disabled id="permissao" name="permissao" required>
             <option value="1">Administrador</option>
             <option value="2">Funcionário</option>
         </select>

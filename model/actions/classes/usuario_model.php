@@ -10,6 +10,7 @@ class Usuario{
     public function Logar($email, $senha){
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/login.php";
         $dados = http_build_query(array(
+            
             "email_usuario" => $email,
             "senha_usuario" => $senha,
         ));
@@ -35,8 +36,9 @@ class Usuario{
         if (isset($resultado['token'])) {
             
             $token = $resultado['token'];
-            setcookie('nome', $token->nome_funcionario, time() + 7200, "/");
+            setcookie('nome_usuario', $resultado['nome_usuario'], time() + 7200, "/");
             setcookie('token', $token, time() + 7200, "/");
+            
 
             return true;
         } else {
