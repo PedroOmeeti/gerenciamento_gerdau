@@ -27,7 +27,7 @@ $caminho_pagina = $raiz.'view';
           <a class="nav-link dropdown-toggle text-decoration-none fs-5 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_COOKIE['nome_usuario']; ?></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
-            <li><a class="dropdown-item" href="./usuario/cadastrarUsuario_view.php">Adicionar Usuário</a></li>
+            <li><a class="dropdown-item" href="<?=$caminho_pagina;?>/usuario/cadastrarUsuario_view.php">Adicionar Usuário</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>

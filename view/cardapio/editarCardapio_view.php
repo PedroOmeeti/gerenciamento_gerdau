@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <?php require_once('./components/Navbar.php'); ?>
+    <?php require_once('../components/Navbar.php'); ?>
     <div class="container">
-    <h1>Edição</h1>
+    <h1>Editar</h1>
     <form action="../../model/actions/editar_prato.php" method="POST">
       <input type="hidden" name="id" value="" />
 
