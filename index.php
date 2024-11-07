@@ -1,3 +1,9 @@
+<?php 
+$raiz = 'http://'.$_SERVER['SERVER_NAME'].'/gerenciamento_gerdau/';
+$caminho_pagina = $raiz.'view';
+
+
+?>
 <!doctype html>
 <lang="en">
 
@@ -21,7 +27,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="card fundo border border-dark border-2" style="width: 38rem;">
-        <img src="./assets/images/gerdau-logo.png" class="card-img-top d-block m-auto logo mt-3" alt="logo">
+        <img src="<?php $raiz;?>assets/images/logo_grsa_original.png" class="card-img-top d-block m-auto logo mt-3" alt="logo">
         <div class="card-body">
           <div class="col">
             <form action="/gerenciamento_gerdau/model/actions/loginUsuario.php" method="POST">
