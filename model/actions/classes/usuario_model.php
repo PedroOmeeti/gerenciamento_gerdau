@@ -10,7 +10,6 @@ class Usuario{
     public function Logar($email, $senha){
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/login.php";
         $dados = http_build_query(array(
-            
             "email_usuario" => $email,
             "senha_usuario" => $senha,
         ));

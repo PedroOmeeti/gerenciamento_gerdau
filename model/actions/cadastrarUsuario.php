@@ -13,5 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Chamar o método Cadastrar
     $usuario->Cadastrar($email, $senha, $nome, $permissao);
+    
 }
 ?>
