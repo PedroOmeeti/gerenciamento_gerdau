@@ -126,10 +126,10 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
                 </div>
             </div>
         </div>
-
-        <?php
-        require_once('../components/Rodape.php');
-        ?>
+    </div>
+    <?php
+    require_once('../components/Rodape.php');
+    ?>
 </body>
 
 </html>
