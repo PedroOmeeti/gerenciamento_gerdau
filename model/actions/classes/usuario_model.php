@@ -8,7 +8,7 @@ class Usuario{
     public $senha;
 
     public function Logar($email, $senha){
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/login.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/loginPorEmail.php";
         $dados = http_build_query(array(
             "email_usuario" => $email,
             "senha_usuario" => $senha,
@@ -47,13 +47,14 @@ class Usuario{
     }
 
 
-    public function Cadastrar($email, $senha, $nome, $permissao){
+    public function Cadastrar($email, $senha, $nome, $chapa, $permissao){
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/cadastrarUsuario.php";
 
         $dados = http_build_query(array(
             "email_usuario" => $email,
             "senha_usuario" => $senha,
             "nome_usuario" => $nome,
+            "chapa_usuario" => $chapa,
             "permissao_usuario" => $permissao,
         ));
     
