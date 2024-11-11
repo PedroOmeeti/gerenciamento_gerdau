@@ -6,13 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $nome = $_POST['nome'];
+    $chapa = $_POST['chapa'];
     $permissao = $_POST['permissao'];
 
     // Criar uma nova instância da classe Usuario
     $usuario = new Usuario();
 
     // Chamar o método Cadastrar
-    $usuario->Cadastrar($email, $senha, $nome, $permissao);
+    $usuario->Cadastrar($email, $senha, $nome, $chapa, $permissao);
     
 }
 ?>

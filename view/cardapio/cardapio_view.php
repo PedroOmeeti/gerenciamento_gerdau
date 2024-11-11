@@ -1,9 +1,8 @@
 <?php
 session_start();
 $lista_periodo = isset($_SESSION['lista_periodo']) ? $_SESSION['lista_periodo'] : null;
-unset($_SESSION['lista_periodo']); // Limpa a sessão após uso
+unset($_SESSION['lista_periodo']);
 error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
-
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +38,8 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
                         <div class="col-4">
                             <form method="POST" action="../../model/actions/cardapio_controller.php">
                                 <div class="row p-2 d-flex text-center">
-                                    <div class="col">Data inicial: <input type="date" id="data_inicial" name="data_inicial"></div>
-                                    <div class="col">Data final: <input type="date" id="data_final" name="data_final"></div>
+                                    <div class="col">Data inicial: <input type="date" id="data_inicial" name="data_inicial" value="<?= date('Y-m-d') ?>"></div>
+                                    <div class="col">Data final: <input type="date" id="data_final" name="data_final" value="<?= date('Y-m-d', strtotime('+7 days'))?>"></div>
                                 </div>
                                 <div class="row  text-center">
                                     <div class="col">
