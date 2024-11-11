@@ -39,7 +39,7 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
                             <form method="POST" action="../../model/actions/cardapio_controller.php">
                                 <div class="row p-2 d-flex text-center">
                                     <div class="col">Data inicial: <input type="date" id="data_inicial" name="data_inicial" value="<?= date('Y-m-d') ?>"></div>
-                                    <div class="col">Data final: <input type="date" id="data_final" name="data_final" value="<?= date('Y-m-d', strtotime('+7 days'))?>"></div>
+                                    <div class="col">Data final: <input type="date" id="data_final" name="data_final" value="<?= date('Y-m-d', strtotime('+7 days')) ?>"></div>
                                 </div>
                                 <div class="row  text-center">
                                     <div class="col">
@@ -66,85 +66,53 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 
 
                 <div class="row mt-5 d-flex justify-content-center">
-                <?php if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
-                    <?php $cont = 1; ?>
-                    <?php foreach ($lista_periodo['dados'] as $prato): ?>
-                        <?php if ($cont == 1): ?>
-                            <?php $ultima_data = $prato['data_cardapio']; ?>
-                            <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
-                        <?php endif; ?>
-                        <?php $cont++; ?>
-                        <?php if ($ultima_data == $prato['data_cardapio']): ?>
-                            <div class="row col-12 p-2">
-                                <div class="card border border-1 rounded-4 bg-body-tertiary ">
-                                    <div class="card-body d-flex flex-row p-0">
-                                        <div class="col-3 border-end border-2 p-3">
-                                            <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
-                                            <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
-                                        </div>
-                                        <div class="col-7 text-center p-3">
-                                            <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
-                                            <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
-                                        </div>
-                                        <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                            <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
-                            <?php $ultima_data = $prato['data_cardapio']; ?>
-                            <div class="row col-12 p-2">
-                                <div class="card border border-1 rounded-4 bg-body-tertiary ">
-                                    <div class="card-body d-flex flex-row p-0">
-                                        <div class="col-3 border-end border-2 p-3">
-                                            <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
-                                            <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
-                                        </div>
-                                        <div class="col-7 text-center p-3">
-                                            <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
-                                            <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
-                                        </div>
-                                        <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                            <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="row col-12 p-2">
-                            <div class="alert alert-danger" role="alert">
-                                Selecione a data inicial e final
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
-
-
-
-                    <h1>Segunda-feira</h1>
                     <?php if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
+                        <?php $cont = 1; ?>
                         <?php foreach ($lista_periodo['dados'] as $prato): ?>
-                            <div class="row col-12 p-2">
-                                <div class="card border border-1 rounded-4 bg-body-tertiary ">
-                                    <div class="card-body d-flex flex-row p-0">
-                                        <div class="col-3 border-end border-2 p-3">
-                                            <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
-                                            <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
-                                        </div>
-                                        <div class="col-7 text-center p-3">
-                                            <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
-                                            <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
-                                        </div>
-                                        <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                            <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
+                            <?php if ($cont == 1): ?>
+                                <?php $ultima_data = $prato['data_cardapio']; ?>
+                                <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
+                            <?php endif; ?>
+                            <?php $cont++; ?>
+                            <?php if ($ultima_data == $prato['data_cardapio']): ?>
+                                <div class="row col-12 p-2">
+                                    <div class="card border border-1 rounded-4 bg-body-tertiary ">
+                                        <div class="card-body d-flex flex-row p-0">
+                                            <div class="col-3 border-end border-2 p-3">
+                                                <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
+                                                <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
+                                            </div>
+                                            <div class="col-7 text-center p-3">
+                                                <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
+                                                <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
+                                            </div>
+                                            <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
+                                                <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php else: ?>
+                                <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
+                                <?php $ultima_data = $prato['data_cardapio']; ?>
+                                <div class="row col-12 p-2">
+                                    <div class="card border border-1 rounded-4 bg-body-tertiary ">
+                                        <div class="card-body d-flex flex-row p-0">
+                                            <div class="col-3 border-end border-2 p-3">
+                                                <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
+                                                <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
+                                            </div>
+                                            <div class="col-7 text-center p-3">
+                                                <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
+                                                <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
+                                            </div>
+                                            <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
+                                                <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="row col-12 p-2">
@@ -154,123 +122,7 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
                         </div>
                     <?php endif; ?>
 
-                    
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Speciale</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Clássico</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Natural</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <h1>Terça-feira</h1>
-                    <div class="row col-12 p-2">
-                        <div class="card border border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Dia a Dia</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Speciale</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Clássico</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 p-2">
-                        <div class="card border-1 rounded-4 bg-body-tertiary ">
-                            <div class="card-body d-flex flex-row p-0">
-                                <div class="col-3 border-end border-2 p-3">
-                                    <h5 class="card-title">Natural</h5>
-                                </div>
-                                <div class="col-7 text-center p-3">
-                                    <p class="fs-5"><b>Almoço</b></p>
-                                    <p class="card-text f2-4">Descrição da refeição</p>
-                                </div>
-                                <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='editarCardapio_view.php'">Editar Refeição</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
