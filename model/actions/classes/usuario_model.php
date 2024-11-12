@@ -35,7 +35,13 @@ class Usuario{
         if (isset($resultado['token'])) {
             
             $token = $resultado['token'];
-            setcookie('nome_usuario', $resultado['nome_usuario'], time() + 7200, "/");
+            
+            session_start();
+            $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
+            $_SESSION['email'] = $resultado['email_usuario'];
+            $_SESSION['id'] = $resultado['id'];
+            $_SESSION['chapa'] = $resultado['chapa_usuario'];
+            
             setcookie('token', $token, time() + 7200, "/");
             
 
@@ -75,6 +81,37 @@ class Usuario{
                     echo "Erro no cadastro: " . $response_data->mensagem;
                 } else {
                     echo "Erro no cadastro: resposta inesperada.";
+                }
+            }
+        }
+        curl_close($ch);
+    }
+
+    public function EditarEmailUsuario($email, $id){
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
+
+        $dados = http_build_query(array(
+            "email_usuario" => $email,
+            "id_usuario" => $id
+        ));
+    
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        $resultado = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Erro no cURL: ' . curl_error($ch);
+        } else {
+            $response_data = json_decode($resultado);
+            if (isset($response_data->sucesso) && $response_data->sucesso == true) {
+                echo "Alteração realizada com sucesso!";
+            } else {
+                if (isset($response_data->mensagem)) {
+                    echo "Erro na alteração do email: " . $response_data->mensagem;
+                } else {
+                    echo "Erro na alteração do email: resposta inesperada.";
                 }
             }
         }
