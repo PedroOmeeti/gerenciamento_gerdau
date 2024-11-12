@@ -35,6 +35,7 @@ class Usuario{
         if (isset($resultado['token'])) {
             
             $token = $resultado['token'];
+            
             setcookie('nome_usuario', $resultado['nome_usuario'], time() + 7200, "/");
             setcookie('token', $token, time() + 7200, "/");
             
