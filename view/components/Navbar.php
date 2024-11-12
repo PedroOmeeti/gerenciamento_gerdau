@@ -20,7 +20,7 @@ $caminho_pagina = $raiz.'view';
           <a class="nav-link fs-5" href="<?=$caminho_pagina;?>/cardapio/cardapio_view.php">Cardápio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-5" href="#">Estástisticas</a>
+          <a class="nav-link fs-5" href="<?=$caminho_pagina;?>/usuario/funcionario_view.php">Funcionários</a>
         </li>
         
         <li class="nav-item dropdown">
