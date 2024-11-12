@@ -3,8 +3,10 @@ $raiz = 'http://'.$_SERVER['SERVER_NAME'].'/gerenciamento_gerdau/';
 $caminho_pagina = $raiz.'view';
 
 ?>
+
+<link rel="stylesheet" href="./style/rodape.css">
 <div class="div">
-  <footer class="bg-dark text-center text-white">
+  <footer class="rodape bg-dark text-center text-white">
     <div class="container p-4 pb-0">
       <section class="mb-4">
         <a class="navbar-brand" href="<?=$caminho_pagina;?>/painel_adm_view.php"><img src="<?=$raiz;?>assets/images/logo_grsa_cortado_branco.png" alt="Logo GRSA"></a>
