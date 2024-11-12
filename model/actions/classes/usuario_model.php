@@ -36,10 +36,12 @@ class Usuario{
             
             $token = $resultado['token'];
             
-            setcookie('nome_usuario', $resultado['nome_usuario'], time() + 7200, "/");
-            setcookie('email', $resultado['email_usuario'], time() + 7200, "/");
-            setcookie('id', $resultado['id'], time() + 7200, "/");
-            setcookie('chapa', $resultado['chapa_usuario'], time() + 7200, "/");
+            session_start();
+            $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
+            $_SESSION['email'] = $resultado['email_usuario'];
+            $_SESSION['id'] = $resultado['id'];
+            $_SESSION['chapa'] = $resultado['chapa_usuario'];
+            
             setcookie('token', $token, time() + 7200, "/");
             
 
