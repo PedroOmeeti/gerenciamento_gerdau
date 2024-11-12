@@ -90,7 +90,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
+                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>'">Editar Refeição</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal">Editar Refeição</button>
+                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>'">Editar Refeição</button>
                                     </div>
                                 </div>
                             </div>
