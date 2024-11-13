@@ -36,8 +36,7 @@ class Usuario{
             $_SESSION['email'] = $resultado['email_usuario'];
             $_SESSION['id'] = $resultado['id'];
             $_SESSION['chapa'] = $resultado['chapa_usuario'];
-            
-            setcookie('token', $token, time() + 7200, "/");
+            $_SESSION['token'] = $token;
             
 
             return true;
