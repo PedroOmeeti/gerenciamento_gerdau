@@ -2,7 +2,6 @@
 $raiz = 'http://' . $_SERVER['SERVER_NAME'] . '/gerenciamento_gerdau/';
 $caminho_pagina = $raiz . 'view';
 
-session_start();
 
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
 $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d', strtotime('+7 days'));
@@ -31,7 +30,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
 
         <li class="nav-item dropdown">
 
-          <a class="nav-link dropdown-toggle text-decoration-none fs-5 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['nome_usuario']; ?></a>
+          <a class="nav-link dropdown-toggle text-decoration-none fs-5 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_COOKIE['nome_user']; ?></a>
 
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?= $caminho_pagina; ?>/usuario/editarInfosUsuario_view.php">Editar Perfil</a></li>
