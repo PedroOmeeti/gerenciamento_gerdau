@@ -2,11 +2,6 @@
 // require_once('Banco.class.php');
 
 class Usuario{
-    public $id;
-    public $nome;
-    public $email;
-    public $senha;
-
     public function Logar($email, $senha){
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/loginPorEmail.php";
         $dados = http_build_query(array(
@@ -41,8 +36,7 @@ class Usuario{
             $_SESSION['email'] = $resultado['email_usuario'];
             $_SESSION['id'] = $resultado['id'];
             $_SESSION['chapa'] = $resultado['chapa_usuario'];
-            
-            setcookie('token', $token, time() + 7200, "/");
+            $_SESSION['token'] = $token;
             
 
             return true;

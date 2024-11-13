@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class="d-grid gap-2 col-md-9">
-                  <a href="#" class="btn btn-primary mt-4">Mudar senha</a>
+                  <a href="./mudarSenhaUsuario.php" class="btn btn-primary mt-4">Mudar senha</a>
                 </div>
               </form>
             </div>
