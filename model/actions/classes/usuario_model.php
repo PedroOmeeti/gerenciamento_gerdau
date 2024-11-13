@@ -81,6 +81,7 @@ class Usuario{
                     echo "Erro no cadastro: " . $response_data->mensagem;
                 } else {
                     echo "Erro no cadastro: resposta inesperada.";
+                    
                 }
             }
         }
@@ -117,6 +118,8 @@ class Usuario{
         }
         curl_close($ch);
     }
+
+    
     
 }
 
