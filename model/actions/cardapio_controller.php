@@ -51,7 +51,6 @@ if ($data_inicial && $data_final) {
 
     // Armazena a lista na sessão
     $_SESSION['lista_periodo'] = $lista_periodo;
-
     // Redireciona para a página de visualização do cardápio
     header("Location: ../../view/cardapio/cardapio_view.php");
     exit();
