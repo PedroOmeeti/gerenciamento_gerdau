@@ -14,8 +14,9 @@ class Cardapio
             "data_final" => $data_final,
         ));
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
@@ -56,7 +57,7 @@ class Cardapio
 
 
         if (isset($resultado['token']['token'])) {
-            setcookie('token', $resultado['token']['token'], time() + 7200, "/");
+            $_SESSION['token'] = $resultado['token']['token'];
         }
 
 
@@ -72,12 +73,12 @@ class Cardapio
             "id_ingrediente" => $id_ingrediente,
             "data_cardapio" => $data_cardapio,
         ));
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
-
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -101,6 +102,9 @@ class Cardapio
                 }
             }
         }
+        if (isset($resultado['token']['token'])) {
+            $_SESSION['token'] = $resultado['token']['token'];
+        }
         curl_close($ch);
         return $response_data;
     }
@@ -109,8 +113,9 @@ class Cardapio
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratos.php";
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
@@ -148,7 +153,7 @@ class Cardapio
         }
 
         if (isset($resultado['token']['token'])) {
-            setcookie('token', $resultado['token']['token'], time() + 7200, "/");
+            $_SESSION['token'] = $resultado['token']['token'];
         }
 
         return $resultado;
@@ -158,8 +163,9 @@ class Cardapio
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarIngredientes.php";
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
@@ -197,7 +203,7 @@ class Cardapio
         }
 
         if (isset($resultado['token']['token'])) {
-            setcookie('token', $resultado['token']['token'], time() + 7200, "/");
+            $_SESSION['token'] = $resultado['token']['token'];
         }
 
         return $resultado;
@@ -205,15 +211,16 @@ class Cardapio
 
     public function ListarCardapioPorDia($data_cardapio)
     {
-         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarCardapioPorDia.php?data_cardapio=" . urlencode($data_cardapio);
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarCardapioPorDia.php?data_cardapio=" . urlencode($data_cardapio);
 
 
         $dados = http_build_query(array(
             "data_cardapio" => $data_cardapio
         ));
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
@@ -252,23 +259,24 @@ class Cardapio
         }
 
         if (isset($resultado['token']['token'])) {
-            setcookie('token', $resultado['token']['token'], time() + 7200, "/");
+            $_SESSION['token'] = $resultado['token']['token'];
         }
 
         return $resultado;
     }
     public function ListarPratoPorDia($data_cardapio, $id_prato)
     {
-         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratoCardapioDia.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratoCardapioDia.php";
 
 
         $dados = http_build_query(array(
             "data_cardapio" => $data_cardapio,
-            "id_prato" => $id_prato 
+            "id_prato" => $id_prato
         ));
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
         } else {
             die('Token não disponível.');
         }
@@ -307,7 +315,7 @@ class Cardapio
         }
 
         if (isset($resultado['token']['token'])) {
-            setcookie('token', $resultado['token']['token'], time() + 7200, "/");
+            $_SESSION['token'] = $resultado['token']['token'];
         }
 
         return $resultado;
