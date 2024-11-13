@@ -4,9 +4,10 @@ $lista_periodo = isset($_SESSION['lista_periodo']) ? $_SESSION['lista_periodo'] 
 unset($_SESSION['lista_periodo']);
 error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 
-// Verifique se não há dados do cardápio no período e defina os valores padrão para as datas
+// Se os dados forem enviados via POST, usar esses valores; caso contrário, usar valores padrão
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
 $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d', strtotime('+7 days'));
+
 
 
 
@@ -55,7 +56,8 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                 </div>
                                 <div class="row text-center">
                                     <div class="col">
-                                        <button class="btn btn-primary" type="submit" id="exibir-cardapio" onclick="document.getElementById('exibir-cardapio').submit()">Exibir Cardápio</button>
+                                        <button class="btn btn-primary" type="submit" id="exibir-cardapio">Exibir Cardápio</button>
+
                                     </div>
                                 </div>
                             </form>
@@ -90,7 +92,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>'">Editar Refeição</button>
+                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio'], $prato['id_prato']; ?>'">Editar Refeição</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +112,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>'">Editar Refeição</button>
+                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio'], $prato['id_prato']; ?>'">Editar Refeição</button>
                                     </div>
                                 </div>
                             </div>
@@ -126,11 +128,11 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
             <?php endif; ?>
         </div>
     </div>
-    
-    
 
-    
-        <?php require_once('../components/Rodape.php'); ?>
+
+
+
+    <?php require_once('../components/Rodape.php'); ?>
 
 
 
