@@ -4,7 +4,9 @@ require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
 $data_cardapio = isset($_GET['data_cardapio']) ? $_GET['data_cardapio'] : null;
 
-$data_cardapio = str_replace('-', '/', date('d-m-Y', strtotime($data_cardapio)));
+print_r($data_cardapio);
+
+
 $prato = $cardapio->listarCardapioPorDia($data_cardapio);
 $prato = $prato['dados'][0];
 print_r($prato);
@@ -39,8 +41,8 @@ print_r($data_cardapio);
             </div>
 
             <div class="form-group mt-3">
-                <label for="Imagem">Imagem</label>
-                <input type="file" value="<?= $prato['ingredientes'] ?>" class="form-control" id="imagem" name="imagem">
+                <label for="descricao">ingredientes:</label>
+                <input type="text" value="<?= $prato['ingredientes'] ?>" class="form-control" id="descricao" name="descricao">
             </div>
 
             <button type="submit" class="btn btn-primary mt-4">Editar</button>

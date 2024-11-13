@@ -2,38 +2,42 @@
 
 require_once('classes/cardapio_model.php');
 
+// Inicia a sessão
 session_start();
 
 $cardapio = new Cardapio();
 
-if (isset($_POST['data_inicial']) && isset($_POST['data_final'])) {
-    $data_inicial = $_POST['data_inicial'];
-    $data_final = $_POST['data_final'];
+// Verifica se as datas foram enviadas via POST ou GET
+$data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : (isset($_GET['data_inicial']) ? $_GET['data_inicial'] : null);
+$data_final = isset($_POST['data_final']) ? $_POST['data_final'] : (isset($_GET['data_final']) ? $_GET['data_final'] : null);
 
-    // Log das datas recebidas
-    error_log("Data inicial: " . $data_inicial);
-    error_log("Data final: " . $data_final);
+// Log das datas recebidas para depuração
+error_log("Data inicial recebida: " . $data_inicial);
+error_log("Data final recebida: " . $data_final);
 
-    // Convertendo para o formato d/m/Y
+// Verifica se as datas foram fornecidas
+if ($data_inicial && $data_final) {
+    // Converte as datas de Y-m-d para o formato d/m/Y
     $data_inicial_obj = DateTime::createFromFormat('Y-m-d', $data_inicial);
     $data_final_obj = DateTime::createFromFormat('Y-m-d', $data_final);
 
+    // Verifica se a conversão foi bem-sucedida
     if (!$data_inicial_obj || !$data_final_obj) {
         error_log("Erro na conversão das datas.");
         echo json_encode(['erro' => 'Datas inválidas.']);
         exit();
     }
 
-    // Formato d/m/Y para a API
-    $data_inicial = $data_inicial_obj->format('d/m/Y');
-    $data_final = $data_final_obj->format('d/m/Y');
+    // Converte as datas para o formato d/m/Y
+    $data_inicial_formatada = $data_inicial_obj->format('d/m/Y');
+    $data_final_formatada = $data_final_obj->format('d/m/Y');
 
     // Log das datas convertidas
-    error_log("Data inicial convertida: " . $data_inicial);
-    error_log("Data final convertida: " . $data_final);
+    error_log("Data inicial convertida: " . $data_inicial_formatada);
+    error_log("Data final convertida: " . $data_final_formatada);
 
     // Chama o método para listar o cardápio
-    $lista_periodo = $cardapio->ListarPeriodo($data_inicial, $data_final);
+    $lista_periodo = $cardapio->ListarPeriodo($data_inicial_formatada, $data_final_formatada);
 
     // Log da resposta da API
     error_log("Resposta da API: " . print_r($lista_periodo, true));
@@ -45,10 +49,13 @@ if (isset($_POST['data_inicial']) && isset($_POST['data_final'])) {
         exit();
     }
 
+    // Armazena a lista na sessão
     $_SESSION['lista_periodo'] = $lista_periodo;
 
+    // Redireciona para a página de visualização do cardápio
     header("Location: ../../view/cardapio/cardapio_view.php");
     exit();
 } else {
+    // Se as datas não foram fornecidas, exibe erro
     echo json_encode(['erro' => 'Parâmetros data_inicial e data_final são necessários.']);
 }
