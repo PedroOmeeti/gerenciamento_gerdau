@@ -27,7 +27,9 @@ session_start();
         </li>
         
         <li class="nav-item dropdown">
+
           <a class="nav-link dropdown-toggle text-decoration-none fs-5 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['nome_usuario']; ?></a>
+
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?=$caminho_pagina;?>/usuario/editarInfosUsuario_view.php">Editar Perfil</a></li>
             <li><a class="dropdown-item" href="<?=$caminho_pagina;?>/usuario/cadastrarUsuario_view.php">Adicionar Usuário</a></li>
