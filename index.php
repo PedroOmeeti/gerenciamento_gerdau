@@ -2,7 +2,6 @@
 $raiz = 'http://'.$_SERVER['SERVER_NAME'].'/gerenciamento_gerdau/';
 $caminho_pagina = $raiz.'view';
 
-
 ?>
 <!doctype html>
 <lang="en">
