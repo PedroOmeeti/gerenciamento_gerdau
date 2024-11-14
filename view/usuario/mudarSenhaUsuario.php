@@ -56,19 +56,25 @@
     <script>
       
       function verificarSenha() {
-         var senha = document.getElementById("senha").value;
-         var csenha = document.getElementById("csenha").value;
-         
-         if (senha == "" || csenha == "") {
-           document.getElementById("botao").disabled = true;
-           if (senha != csenha || csenha != senha) {
-              document.getElementById("verificao").innerHTML = "As senhas não coincidem.";
-            }
-            
-         } else {
-            document.getElementById("verificao").innerHTML = "";
-            document.getElementById("botao").disabled = false;
-         }
+        var senha = document.getElementById("senha").value;
+        var csenha = document.getElementById("csenha").value;
+        var botao = document.getElementById("botao");
+        var verificacao = document.getElementById("verificao");
+
+        // Verifica se algum dos campos está vazio ou se as senhas não coincidem
+        if (senha === "" || csenha === "") {
+            verificacao.innerHTML = ""; // Limpa a mensagem de erro
+            botao.disabled = true; // Desabilita o botão
+        } else if (senha !== csenha) {
+            verificacao.innerHTML = "As senhas não coincidem."; // Mostra a mensagem de erro
+            botao.disabled = true; // Desabilita o botão
+        } else {
+            verificacao.innerHTML = ""; // Limpa a mensagem de erro
+            botao.disabled = false; // Habilita o botão
+        }
+
+        // Garante que o botão seja desabilitado quando as senhas não coincidirem mesmo após a primeira ativação
+        botao.disabled = (senha !== csenha || senha === "" || csenha === "");
       }
     </script>
     <?php

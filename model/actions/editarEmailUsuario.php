@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+if(!isset($_SESSION['token'])) {
+    header("location: index.php");
+    exit();
+}
+
 require_once('classes/usuario_model.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
