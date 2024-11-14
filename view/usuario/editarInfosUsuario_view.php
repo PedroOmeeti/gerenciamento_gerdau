@@ -32,7 +32,7 @@
             <div class="col-8">
               <form action="../../model/actions/editarEmailUsuario.php" method="POST" class="d-flex flex-column justify-content-start align-items-center">
                 <div class="form-group col-md-9">
-                    <p class="fs-5"><strong>Nome:</strong> <?php echo $_SESSION['nome_usuario']; ?></p>
+                    <p class="fs-5 mt-2"><strong>Nome:</strong> <?php echo $_SESSION['nome_usuario']; ?></p>
                 </div>
                 <div class="form-group col-md-9">
                     <p class="fs-5"><strong>Email:</strong> <?php echo $_SESSION['email']; ?></p>

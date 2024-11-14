@@ -1,9 +1,14 @@
 <?php
 
-require_once('classes/cardapio_model.php');
-
 // Inicia a sessão
 session_start();
+if(!isset($_SESSION['token'])) {
+    header("location: index.php");
+    exit();
+}
+require_once('classes/cardapio_model.php');
+
+
 
 $cardapio = new Cardapio();
 
