@@ -163,7 +163,7 @@ class Cardapio
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarIngredientes.php";
 
-        session_start();
+        // session_start();
         if (isset($_SESSION['token'])) {
             $token = $_SESSION['token'];
         } else {
@@ -274,7 +274,7 @@ class Cardapio
             "id_prato" => $id_prato
         ));
 
-        session_start();
+        // session_start();
         if (isset($_SESSION['token'])) {
             $token = $_SESSION['token'];
         } else {
