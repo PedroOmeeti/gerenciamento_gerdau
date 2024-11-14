@@ -4,6 +4,7 @@ $lista_periodo = isset($_SESSION['lista_periodo']) ? $_SESSION['lista_periodo'] 
 error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 
 // Se os dados forem enviados via POST, usar esses valores; caso contrário, usar valores padrão
+// Se os dados forem enviados via POST, u sar esses valores; caso contrário, usar valores padrão
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
 $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d', strtotime('+7 days'));
 
