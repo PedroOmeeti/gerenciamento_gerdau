@@ -7,6 +7,10 @@ error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
 $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d', strtotime('+7 days'));
 
+if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
+    header('Location: ../../model/actions/cardapio_controller.php?data_inicial=' . $data_inicial . '&data_final=' . $data_final);
+    exit;
+}
 
 ?>
 
@@ -78,7 +82,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                     <?php $cont++; ?>
                     <?php if ($ultima_data == $prato['data_cardapio']): ?>
                         <div class="row col-12 p-2">
-                            <div class="card border border-1 rounded-4 bg-body-tertiary ">
+                            <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor: pointer;" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#fff'">
                                 <div class="card-body d-flex flex-row p-0">
                                     <div class="col-3 border-end border-2 p-3">
                                         <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
@@ -89,7 +93,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Editar Refeição</button>
+                                        <button class="btn btn-outline-danger btn-sm " data-toggle="modal" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +102,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                         <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
                         <?php $ultima_data = $prato['data_cardapio']; ?>
                         <div class="row col-12 p-2">
-                            <div class="card border border-1 rounded-4 bg-body-tertiary ">
+                            <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor: pointer;" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#fff'">
                                 <div class="card-body d-flex flex-row p-0">
                                     <div class="col-3 border-end border-2 p-3">
                                         <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
@@ -109,7 +113,7 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-secondary btn-sm" data-toggle="modal" onclick="window.location.href='../../model/actions/listarCardapioPorDia_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Editar Refeição</button>
+                                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
                                     </div>
                                 </div>
                             </div>
