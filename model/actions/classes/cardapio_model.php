@@ -1,10 +1,5 @@
 <?php
 // require_once('Banco.class.php');
-session_start();
-if(!isset($_SESSION['token'])) {
-    header("location: index.php");
-    exit();
-}
 
 class Cardapio
 {
@@ -73,7 +68,6 @@ class Cardapio
     public function AdicionarItem($id_prato, $id_ingrediente, $data_cardapio)
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarItemCardapio.php";
-        
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
             "id_ingrediente" => $id_ingrediente,
@@ -328,13 +322,15 @@ class Cardapio
     }
 
 
-    public function ExcluirCardapioId($id_cardapio)
+    public function ExcluirCardapioId($id_prato, $data_cardapio)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirItemCardapioId.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirPratoCardapioDia.php";
 
 
         $dados = http_build_query(array(
-            "id_cardapio" => $id_cardapio
+            "id_prato" => $id_prato,
+            "data_cardapio" => $data_cardapio
+
         ));
 
         session_start();
