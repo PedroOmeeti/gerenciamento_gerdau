@@ -1,21 +1,27 @@
 <?php
-session_start();
-if(!isset($_SESSION['token'])) {
-    header("location: index.php");
-    exit();
-}
-//listar pratos
+$raiz = 'http://' . $_SERVER['SERVER_NAME'] . '/gerenciamento_gerdau/';
+$caminho_pagina = $raiz . 'model/actions/';
+
+
 require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
-$data_cardapio = isset($_GET['data_cardapio']) ? $_GET['data_cardapio'] : null;
 
-print_r($data_cardapio);
+$pratos = $cardapio->ListarPrato();
+$ingredientes = $cardapio->ListarIngredientes();
 
+if (isset($_GET['dados']) && !empty($_GET['dados'])) {
+    // Decodifique o JSON
+    $dados = json_decode($_GET['dados'], true);  // true para retornar um array associativo
 
-$prato = $cardapio->listarCardapioPorDia($data_cardapio);
-$prato = $prato['dados'][0];
-print_r($prato);
-print_r($data_cardapio);
+    // Verifique se a decodificação foi bem-sucedida e se $dados é um array
+    if (is_array($dados) && isset($dados['dados'][0])) {
+        $prato = $dados['dados'][0];  // Acessando o primeiro prato no array
+    } else {
+        die('Erro: dados do prato inválidos.');
+    }
+} else {
+    die('Erro: Nenhum dado foi fornecido.');
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,24 +37,37 @@ print_r($data_cardapio);
     <?php require_once('../components/Navbar.php'); ?>
     <div class="container">
         <h1>Editar</h1>
-        <form action="../../model/actions/editar_prato.php" method="POST">
-            <input type="hidden" name="id" value="<?= $prato['ids'] ?>" />
-
+        <form action="<?= $caminho_pagina ?>editarCardapio_controller.php" method="POST">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($prato['id_prato']) ?>" />
 
             <div class="form-group">
                 <label for="nome">Prato:</label>
-                <input type="text" value="<?= $prato['nome_prato'] ?>" class="form-control" id="nome" name="nome">
+                <select class="form-select" id="nome" name="nome">
+                    <?php foreach ($pratos['dados'] as $p) { ?>
+                        <option value="<?= $p['nome_prato'] ?>" <?= $p['nome_prato'] == $prato['nome_prato'] ? 'selected' : '' ?>><?= $p['nome_prato'] ?></option>
+                    <?php } ?>
+                </select>
             </div>
 
             <div class="form-group mt-3">
                 <label for="descricao">Descrição:</label>
-                <input type="text" value="<?= $prato['descricao_prato'] ?>" class="form-control" id="descricao" name="descricao">
+                <input type="text" value="<?= htmlspecialchars($prato['descricao_prato']) ?>" class="form-control" id="descricao" name="descricao">
             </div>
 
             <div class="form-group mt-3">
-                <label for="descricao">ingredientes:</label>
-                <input type="text" value="<?= $prato['ingredientes'] ?>" class="form-control" id="descricao" name="descricao">
+                <label for="ingredientes">Ingredientes:</label>
+                <select class="form-select" id="ingredientes" name="ingredientes[]">
+                    <?php foreach ($ingredientes['dados'] as $ingrediente) { ?>
+                        <option value="<?= $ingrediente['nome_ingrediente'] ?>" <?= in_array($ingrediente['nome_ingrediente'], explode(',', $prato['ingredientes'])) ? 'selected' : '' ?>><?= $ingrediente['nome_ingrediente'] ?></option>
+                    <?php } ?>
+                </select>
             </div>
+
+            <div class="form-group mt-3">
+                <label for="data">Data:</label>
+                <input type="date" value="<?= htmlspecialchars($prato['data_cardapio']) ?>" class="form-control" id="data" name="data">
+            </div>
+
 
             <button type="submit" class="btn btn-primary mt-4">Editar</button>
         </form>
@@ -58,4 +77,3 @@ print_r($data_cardapio);
 </body>
 
 </html>
-
