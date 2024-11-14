@@ -6,7 +6,6 @@ if (isset($_GET['id_prato']) && !empty($_GET['id_prato']) && isset($_GET['data_c
     $id_prato = $_GET['id_prato'];
     $data_cardapio = $_GET['data_cardapio'];
     $data_cardapio = str_replace('-', '/', date('d-m-Y', strtotime($data_cardapio)));
-    
 } else {
     die('Erro: Nenhum ID de prato ou data de cardápio foi fornecido.');
 }
@@ -23,6 +22,7 @@ $prato = $cardapio->ListarPratoPorDia($data_cardapio, $id_prato)['dados'][0];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,11 +53,16 @@ $prato = $cardapio->ListarPratoPorDia($data_cardapio, $id_prato)['dados'][0];
                 <p class="card-text">Ingredientes: <?= htmlspecialchars($prato['ingredientes']) ?></p>
                 <p class="card-text">Data: <?= htmlspecialchars($prato['data_cardapio']) ?></p>
             </div>
-            
-        </div>
-    </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-primary" href="cardapio_view.php">ok</a>
+                </div>
+
+            </div>
+        </div>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </body>
 
 </html>
