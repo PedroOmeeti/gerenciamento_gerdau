@@ -1,11 +1,10 @@
 <?php
-session_start();
-$lista_periodo = isset($_SESSION['lista_periodo']) ? $_SESSION['lista_periodo'] : null;
-unset($_SESSION['lista_periodo']);
-error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 
-// Certifique-se de que $lista_funcionarios seja inicializada
-$lista_funcionarios = isset($_SESSION['lista_funcionarios']) ? $_SESSION['lista_funcionarios'] : [];
+require_once('../../model/actions/classes/usuario_model.php');
+$usuario = new Usuario();
+
+$lista_funcionarios = $usuario->listarUsuario();
+
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ $lista_funcionarios = isset($_SESSION['lista_funcionarios']) ? $_SESSION['lista_
 <body>
     <!-- Navbar -->
     <?php require_once('../components/Navbar.php'); ?>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <div class="col">
                 <h1 class="text-center">Funcionários</h1>
@@ -63,10 +62,10 @@ $lista_funcionarios = isset($_SESSION['lista_funcionarios']) ? $_SESSION['lista_
                 }
             </style>
 
-            <div class="table_component" role="region" tabindex="0">
+            <div class="table_component mt-4" role="region" tabindex="0">
                 <table>
-                    <caption>Funcionários</caption>
                     <thead>
+
                         <tr>
                             <th>id</th>
                             <th>Nome</th>
@@ -77,19 +76,15 @@ $lista_funcionarios = isset($_SESSION['lista_funcionarios']) ? $_SESSION['lista_
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($lista_funcionarios as $funcionario): ?>
+                        <?php foreach ($lista_funcionarios['dados'] as $funcionario): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($funcionario['id_funcionario']); ?></td>
-                                <td><?php echo htmlspecialchars($funcionario['nome']); ?></td>
-                                <td><?php echo htmlspecialchars($funcionario['email']); ?></td>
-                                <td><?php echo htmlspecialchars($funcionario['chapa']); ?></td>
-                                <td><a class="btn btn-primary" href="<?php echo $caminho_pagina; ?>/usuario/editarFuncionario_view.php?id_funcionario=<?php echo htmlspecialchars($funcionario['id_funcionario']); ?>">Editar</a></td>
-                                <td><a class="btn btn-danger" href="<?php echo $caminho_pagina; ?>/usuario/deletarFuncionario_view.php?id_funcionario=<?php echo htmlspecialchars($funcionario['id_funcionario']); ?>">Deletar</a></td>
-
-                          
-                      
+                                <td><?php echo htmlspecialchars($funcionario['id_usuario']); ?></td>
+                                <td><?php echo htmlspecialchars($funcionario['nome_usuario']); ?></td>
+                                <td><?php echo htmlspecialchars($funcionario['email_usuario']); ?></td>
+                                <td><?php echo htmlspecialchars($funcionario['chapa_usuario']); ?></td>
+                                <td><a role="button" type="button" class="btn btn-outline-primary" href="<?php echo $caminho_pagina; ?>/usuario/editarFuncionario_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Editar</a></td>
+                                <td><a role="button" type="button" class="btn btn-outline-danger" href="<?php echo $caminho_pagina; ?>/usuario/deletarFuncionario_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Deletar</a></td>
                             </tr>
-
                         <?php endforeach; ?>
                     </tbody>
                 </table>
