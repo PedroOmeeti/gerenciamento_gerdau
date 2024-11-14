@@ -29,14 +29,13 @@ class Usuario{
         $resultado = json_decode($response, true);
         if (isset($resultado['token'])) {
             
-            $token = $resultado['token'];
-            
+            setcookie('nome_user', $resultado['nome_usuario'], time() + (86400 * 30), "/");
             session_start();
             $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
             $_SESSION['email'] = $resultado['email_usuario'];
             $_SESSION['id'] = $resultado['id'];
             $_SESSION['chapa'] = $resultado['chapa_usuario'];
-            $_SESSION['token'] = $token;
+            $_SESSION['token'] = $resultado['token'];
             
 
             return true;

@@ -1,5 +1,11 @@
 <?php
 session_start();
+if(!isset($_SESSION['token'])) {
+    header("location: index.php");
+    exit();
+}
+
+
 $lista_periodo = isset($_SESSION['lista_periodo']) ? $_SESSION['lista_periodo'] : null;
 unset($_SESSION['lista_periodo']);
 error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
