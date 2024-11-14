@@ -68,6 +68,7 @@ class Cardapio
     public function AdicionarItem($id_prato, $id_ingrediente, $data_cardapio)
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarItemCardapio.php";
+        
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
             "id_ingrediente" => $id_ingrediente,
