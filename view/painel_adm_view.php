@@ -1,3 +1,13 @@
+<?php 
+  $raiz = 'http://'.$_SERVER['SERVER_NAME'].'/gerenciamento_gerdau/';
+  session_start();
+  if(!isset($_SESSION['token'])) {
+    header("location: ../index.php");
+    exit();
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

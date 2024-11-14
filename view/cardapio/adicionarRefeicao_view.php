@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['token'])) {
+    header("location: index.php");
+    exit();
+}
 //listar pratos
 require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
