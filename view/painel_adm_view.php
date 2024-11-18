@@ -6,6 +6,18 @@
     exit();
   }
 
+  require_once('../model/actions/classes/cardapio_model.php');
+  $cardapio = new Cardapio();
+
+  $estrelas = [5, 4, 3, 2, 1];
+    
+    foreach ($estrelas as $estrela) {
+      print_r(${"estrela{$estrela}"} = $cardapio->listarTotalPorEstrela($estrela)['dados'][0] );
+    }
+  
+ //qtd_votos * 100  / total_votos
+  
+
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +36,7 @@
       google.charts.setOnLoadCallback(drawStuff);
 
       function drawStuff() {
+        <?php ?>
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
           ["5 Estrelas", 44],
