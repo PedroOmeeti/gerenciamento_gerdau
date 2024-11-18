@@ -116,6 +116,51 @@ class Usuario
         curl_close($ch);
     }
 
+    public function EditarSenhaUsuario($senha, $id)
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarSenhaUsuario.php";
+
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
+        } else {
+            die('Token não disponível.');
+        }
+
+        $dados = http_build_query(array(
+            "senha_usuario" => $senha,
+            "id_usuario" => $id
+        ));
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: 
+                application/x-www-form-urlencoded',
+                'Authorization:' . $token
+            ),
+        
+    );
+        $resultado = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Erro no cURL: ' . curl_error($ch);
+        } else {
+            $response_data = json_decode($resultado);
+            if (isset($response_data->sucesso) && $response_data->sucesso == true) {
+                echo "Alteração realizada com sucesso!";
+            } else {
+                if (isset($response_data->mensagem)) {
+                    echo "Erro na alteração da senha: " . $response_data->mensagem;
+                } else {
+                    echo "Erro na alteração da senha: resposta inesperada.";
+                }
+            }
+        }
+        curl_close($ch);
+    }
+
     public function ListarUsuario()
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarUsuarios.php";

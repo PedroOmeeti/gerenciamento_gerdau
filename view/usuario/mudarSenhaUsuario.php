@@ -29,7 +29,7 @@
                 <img src="../../assets/images/person.png" style="width: 100%;" alt="">
               </div>
               <div class="col-8">
-                <form action="../../model/actions/#" method="POST" class="d-flex flex-column justify-content-start align-items-center">
+                <form action="../../model/actions/mudarSenhaUsuario_controller.php" method="POST" class="d-flex flex-column justify-content-start align-items-center">
 
                   <div class="text-center form-group col-md-9">
                     <p class="fs-4"><strong>Mudar Senha</strong></p>
