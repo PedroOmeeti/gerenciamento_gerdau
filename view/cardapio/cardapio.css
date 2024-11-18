@@ -3,3 +3,12 @@
     color: rgb(0, 0, 0);
     border-color: #929292 !important;
 }
+
+.card-body:hover {
+    cursor: pointer;
+    background-color: #f8f9fa; /* Cor de fundo mais clara ao passar o mouse */
+}
+
+button:hover {
+    cursor: pointer;
+}
