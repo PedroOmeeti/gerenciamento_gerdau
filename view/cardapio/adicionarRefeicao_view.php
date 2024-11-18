@@ -36,13 +36,29 @@ $ingredientes = $cardapio->ListarIngredientes();
     </div>
     <div class="form-group mt-3">
       <label for="permissao">ingredientes:</label>
-      <select class="form-select" id="id_ingrediente" name="id_ingrediente" required>
-        <?php foreach ($ingredientes['dados'] as $ingrediente) { ?>
-          <option value="<?= $ingrediente['id_ingrediente'] ?>"><?= $ingrediente['nome_ingrediente'] ?></option>
-        <?php } ?>
-      </select>
-    </div>
-    <div class="form-group mt-3">
+      <div class="row">
+        <div class="col">
+          <?php foreach (array_slice($ingredientes['dados'], 0, ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
+              <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
+                <?= $ingrediente['nome_ingrediente'] ?>
+              </label>
+            </div>
+          <?php } ?>
+        </div>
+        <div class="col">
+          <?php foreach (array_slice($ingredientes['dados'], ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
+              <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
+                <?= $ingrediente['nome_ingrediente'] ?>
+              </label>
+            </div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>    <div class="form-group mt-3">
       <label for="data">Data</label>
       <input type="date" value="" class="form-control" id="data_cardapio" name="data_cardapio">
     </div>

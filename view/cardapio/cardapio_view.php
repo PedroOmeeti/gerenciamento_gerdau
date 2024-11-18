@@ -21,6 +21,7 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
     exit;
 }
 
+
 ?>
 
 
@@ -81,63 +82,71 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
         </div>
 
         <div class="row mt-5 d-flex justify-content-center">
-    <?php if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
-        <?php $cont = 1; ?>
-        <?php foreach ($lista_periodo['dados'] as $prato): ?>
-            <?php if ($cont == 1): ?>
-                <?php $ultima_data = $prato['data_cardapio']; ?>
-                <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
-            <?php endif; ?>
-            <?php $cont++; ?>
-            <?php if ($ultima_data == $prato['data_cardapio']): ?>
-                <div class="row col-12 p-2">
-                    <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
-                        <div class="card-body d-flex flex-row p-0">
-                            <div class="col-3 border-end border-2 p-3">
-                                <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
-                                <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
-                            </div>
-                            <div class="col-7 text-center p-3">
-                                <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
-                                <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
-                            </div>
-                            <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php else: ?>
-                <h1><?php echo htmlspecialchars($prato['data_cardapio']); ?></h1>
-                <?php $ultima_data = $prato['data_cardapio']; ?>
-                <div class="row col-12 p-2">
-                    <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
-                        <div class="card-body d-flex flex-row p-0">
-                            <div class="col-3 border-end border-2 p-3">
-                                <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
-                                <p><?php echo htmlspecialchars($prato['data_cardapio']); ?></p>
-                            </div>
-                            <div class="col-7 text-center p-3">
-                                <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
-                                <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
-                            </div>
-                            <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div class="row col-12 p-2">
-            <div class="alert alert-danger" role="alert">
-                Selecione a data inicial e final
-            </div>
-        </div>
-    <?php endif; ?>
-</div>
 
+        
+
+            <?php
+            
+            setlocale(LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'Portuguese_Brazil.1252');
+            
+            
+
+            if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
+                <?php $cont = 1; ?>
+                <?php foreach ($lista_periodo['dados'] as $prato): ?>
+                    <?php if ($cont == 1): ?>
+                        <?php $ultima_data = $prato['data_cardapio']; ?>
+                        <h1><?php echo ucfirst(strftime('%A', strtotime($prato['data_cardapio']))) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
+                    <?php endif; ?>
+                    <?php $cont++; ?>
+                    <?php if ($ultima_data == $prato['data_cardapio']): ?>
+                        <div class="row col-12 p-2">
+                            <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
+                                <div class="card-body d-flex flex-row p-0">
+                                    <div class="col-3 border-end border-2 p-3">
+                                        <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
+                                        <p><?php echo date('d/m/Y', strtotime($prato['data_cardapio'])); ?></p>
+                                    </div>
+                                    <div class="col-7 text-center p-3">
+                                        <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
+                                        <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
+                                    </div>
+                                    <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <h1><?php echo ucfirst(strftime('%A', strtotime($prato['data_cardapio']))) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
+                        <?php $ultima_data = $prato['data_cardapio']; ?>
+                        <div class="row col-12 p-2">
+                            <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
+                                <div class="card-body d-flex flex-row p-0">
+                                    <div class="col-3 border-end border-2 p-3">
+                                        <h5 class="card-title"><?php echo htmlspecialchars($prato['nome_prato']); ?></h5>
+                                        <p><?php echo date('d/m/Y', strtotime($prato['data_cardapio'])); ?></p>
+                                    </div>
+                                    <div class="col-7 text-center p-3">
+                                        <p class="fs-5"><b><?php echo htmlspecialchars($prato['descricao_prato']); ?></b></p>
+                                        <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
+                                    </div>
+                                    <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="row col-12 p-2">
+                    <div class="alert alert-danger" role="alert">
+                        Selecione a data inicial e final
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
 
     </div>
 

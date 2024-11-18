@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['token'])) {
+if (!isset($_SESSION['token'])) {
     header("location: index.php");
     exit();
 }
@@ -22,11 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Data do cardápio: $data_cardapio<br>";
 
     // Chamar o método Cadastrar
-    $cardapio->AdicionarItem($id_prato, $id_ingredientes, $data_cardapio);
+    print_r($id_ingredientes);
+    foreach ($id_ingredientes as $ingrediente) {
+        $cardapio->AdicionarItem($id_prato, $ingrediente, $data_cardapio);
+    }    //$cardapio->AdicionarItem($id_prato, $id_ingredientes, $data_cardapio);
 }
 
-// header('Location: ../../view/painel_adm_view.php');
-// exit();
-
-
-
+header('Location: ../../view/painel_adm_view.php');
+exit();
