@@ -81,7 +81,7 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
             </div>
         </div>
 
-        <div class="row mt-5 d-flex justify-content-center">
+        <div class="row mt-5 mb-5 d-flex justify-content-center">
 
         
 
@@ -89,14 +89,26 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
             
             setlocale(LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'Portuguese_Brazil.1252');
             
+            $dias_da_semana = [
+                'Sunday' => 'domingo',
+                'Monday' => 'segunda-feira',
+                'Tuesday' => 'terça-feira',
+                'Wednesday' => 'quarta-feira',
+                'Thursday' => 'quinta-feira',
+                'Friday' => 'sexta-feira',
+                'Saturday' => 'sábado'
+            ];
             
 
             if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
                 <?php $cont = 1; ?>
                 <?php foreach ($lista_periodo['dados'] as $prato): ?>
                     <?php if ($cont == 1): ?>
-                        <?php $ultima_data = $prato['data_cardapio']; ?>
-                        <h1><?php echo ucfirst(strftime('%A', strtotime($prato['data_cardapio']))) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
+                        <?php 
+            $ultima_data = $prato['data_cardapio']; 
+            $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))]; 
+            ?>
+            <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
                     <?php endif; ?>
                     <?php $cont++; ?>
                     <?php if ($ultima_data == $prato['data_cardapio']): ?>
@@ -118,8 +130,11 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                             </div>
                         </div>
                     <?php else: ?>
-                        <h1><?php echo ucfirst(strftime('%A', strtotime($prato['data_cardapio']))) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
-                        <?php $ultima_data = $prato['data_cardapio']; ?>
+                        <?php 
+            $ultima_data = $prato['data_cardapio']; 
+            $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))]; 
+            ?>
+            <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
                         <div class="row col-12 p-2">
                             <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
                                 <div class="card-body d-flex flex-row p-0">
