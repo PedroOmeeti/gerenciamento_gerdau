@@ -119,12 +119,7 @@ class Cardapio
             "id_prato" => $id_prato,
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -139,7 +134,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token
             )
         ));
         $response = curl_exec($curl);
