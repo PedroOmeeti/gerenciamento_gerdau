@@ -17,9 +17,6 @@ $pratos = $cardapio->ListarPrato();
 $ingredientes = $cardapio->ListarIngredientes();
 $prato = $cardapio->ListarPratoPorDia($data_cardapio, $id_prato)['dados'][0];
 
-echo "ID do prato: $id_prato<br>";
-echo "Data do cardápio: $data_cardapio<br>";
-
 
 ?>
 <!DOCTYPE html>
@@ -47,7 +44,7 @@ echo "Data do cardápio: $data_cardapio<br>";
         ?>
         <h1 class="card-title"><?= $dia_da_semana[$data->format('w')] . ', ' . $data->format('d/m/Y') ?></h1>
         <div class="card mb-3">
-            <div class="row g-0">
+            <div class="row g-0 p-3">
                 <div class="col-md-8">
                     <div class="card-body">
                         <?php

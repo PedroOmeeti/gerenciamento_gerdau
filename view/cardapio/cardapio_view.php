@@ -68,14 +68,14 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                                 </div>
                                 <div class="row text-center">
                                     <div class="col">
-                                        <button class="btn btn-primary" type="submit" id="exibir-cardapio">Exibir Cardápio</button>
+                                        <button class="btn" style="background-color: #B49C5E; color: white" type="submit" id="exibir-cardapio">Exibir Cardápio</button>
 
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="col-4 text-end d-flex align-items-center justify-content-center">
-                            <button class="btn btn-primary" data-toggle="modal" onclick="window.location.href='adicionarRefeicao_view.php'">Adicionar Refeição</button>
+                            <button class="btn" style="background-color: #B49C5E; color: white" data-toggle="modal" onclick="window.location.href='adicionarRefeicao_view.php'">Adicionar Refeição</button>
                         </div>
                     </div>
                 </div>
