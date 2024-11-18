@@ -10,7 +10,7 @@ unset($_SESSION['lista_periodo']);
 error_log("Conteúdo de lista_periodo: " . print_r($lista_periodo, true));
 
 $raiz = 'http://' . $_SERVER['SERVER_NAME'] . '/gerenciamento_gerdau/';
-$caminho_pagina = $raiz . '../../model/actions';
+$caminho_pagina = $raiz . '../../../model/actions';
 
 // Se os dados forem enviados via POST, u sar esses valores; caso contrário, usar valores padrão
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
@@ -34,6 +34,7 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
     <title>Cardápio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="cardapio.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 
 <body>
@@ -46,7 +47,7 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
             </div>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             <h1 class="text-center mt-4">Gerenciamento do Cardápio Semanal</h1>
 
             <div class="row">
@@ -83,12 +84,12 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
 
         <div class="row mt-5 mb-5 d-flex justify-content-center">
 
-        
+
 
             <?php
-            
+
             setlocale(LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'Portuguese_Brazil.1252');
-            
+
             $dias_da_semana = [
                 'Sunday' => 'domingo',
                 'Monday' => 'segunda-feira',
@@ -98,17 +99,17 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                 'Friday' => 'sexta-feira',
                 'Saturday' => 'sábado'
             ];
-            
+
 
             if (isset($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
                 <?php $cont = 1; ?>
                 <?php foreach ($lista_periodo['dados'] as $prato): ?>
                     <?php if ($cont == 1): ?>
-                        <?php 
-            $ultima_data = $prato['data_cardapio']; 
-            $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))]; 
-            ?>
-            <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
+                        <?php
+                        $ultima_data = $prato['data_cardapio'];
+                        $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))];
+                        ?>
+                        <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
                     <?php endif; ?>
                     <?php $cont++; ?>
                     <?php if ($ultima_data == $prato['data_cardapio']): ?>
@@ -124,17 +125,18 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
+                                        <button class="btn btn-outline-danger btn-sm delete-btn" onclick="event.stopPropagation(); deleteCardapio(<?php echo $prato['id_prato']; ?>);">Deletar</button>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     <?php else: ?>
-                        <?php 
-            $ultima_data = $prato['data_cardapio']; 
-            $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))]; 
-            ?>
-            <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
+                        <?php
+                        $ultima_data = $prato['data_cardapio'];
+                        $dia_semana = $dias_da_semana[date('l', strtotime($prato['data_cardapio']))];
+                        ?>
+                        <h1><?php echo ucfirst($dia_semana) . ', ' . date('d/m/Y', strtotime($prato['data_cardapio'])); ?></h1>
                         <div class="row col-12 p-2">
                             <div class="card border border-1 rounded-4 bg-body-tertiary " style="cursor:pointer" onclick="window.location.href='verCardapio_view.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">
                                 <div class="card-body d-flex flex-row p-0">
@@ -147,7 +149,8 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                                         <p class="card-text f2-4"><?php echo htmlspecialchars($prato['ingredientes']); ?></p>
                                     </div>
                                     <div class="col-2 text-end border-start border-2 d-flex align-items-center justify-content-center">
-                                        <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); window.location.href='<?= $caminho_pagina; ?>/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>'">Deletar</button>
+                                        <button class="btn btn-outline-danger btn-sm delete-btn" onclick="event.stopPropagation(); deleteCardapio(<?php echo $prato['id_prato']; ?>);">Deletar</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -172,18 +175,30 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
 
 
 
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cont = 0;
-            function executarFormulario() {                
-                const form = document.getElementById('form-cardapio');
-                    form.submit();
-                    alert($cont);
-                }
-            executarFormulario();
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation(); // Evita que o clique no botão acione o redirecionamento do card
+                const idPrato = button.getAttribute('onclick').match(/deleteCardapio\((\d+)\)/)[1];
+
+                Swal.fire({
+                    title: "Tem certeza?",
+                    text: "Essa ação não poderá ser revertida!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sim, excluir!",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirecionar para a URL de exclusão
+                        window.location.href = "../../model/actions/excluirCardapio_controller.php?data_cardapio=<?php echo $prato['data_cardapio']; ?>&id_prato=<?php echo $prato['id_prato']; ?>";
+                    }
+                });
+            });
         });
-            
-    </script> -->
+    </script>
 </body>
 
 </html>
