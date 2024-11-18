@@ -3,6 +3,19 @@
 
 class Cardapio
 {
+    private $token;
+    private function verificarSessao(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['token'])) {
+
+            $this->token = $_SESSION['token'];
+        } else {
+            die('Token não disponível.');
+        }
+    }
+
     public function ListarPeriodo($data_inicial, $data_final)
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarCardapioPeriodo.php";
@@ -14,12 +27,7 @@ class Cardapio
             "data_final" => $data_final,
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+       $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -34,7 +42,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
@@ -73,19 +81,14 @@ class Cardapio
             "id_ingrediente" => $id_ingrediente,
             "data_cardapio" => $data_cardapio,
         ));
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/x-www-form-urlencoded',
-            'Authorization: ' . $token
+            'Authorization:' . $this->token 
         ));
         $resultado = curl_exec($ch);
         if (curl_errno($ch)) {
@@ -113,12 +116,7 @@ class Cardapio
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratos.php";
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -133,7 +131,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => '',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
@@ -163,12 +161,7 @@ class Cardapio
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarIngredientes.php";
 
-        // session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -183,7 +176,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => '',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
@@ -218,12 +211,7 @@ class Cardapio
             "data_cardapio" => $data_cardapio
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -239,7 +227,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
@@ -274,12 +262,7 @@ class Cardapio
             "id_prato" => $id_prato
         ));
 
-        // session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -295,7 +278,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
@@ -333,12 +316,7 @@ class Cardapio
 
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -354,7 +332,7 @@ class Cardapio
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token 
             ),
         ));
         $response = curl_exec($curl);
