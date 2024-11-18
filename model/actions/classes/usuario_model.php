@@ -88,6 +88,13 @@ class Usuario
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
 
+        session_start();
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
+        } else {
+            die('Token não disponível.');
+        }
+
         $dados = http_build_query(array(
             "email_usuario" => $email,
             "id_usuario" => $id
@@ -97,7 +104,12 @@ class Usuario
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: 
+                application/x-www-form-urlencoded',
+                'Authorization:' . $token
+            ),
+        );
         $resultado = curl_exec($ch);
         if (curl_errno($ch)) {
             echo 'Erro no cURL: ' . curl_error($ch);
@@ -141,8 +153,7 @@ class Usuario
                 application/x-www-form-urlencoded',
                 'Authorization:' . $token
             ),
-        
-    );
+        );
         $resultado = curl_exec($ch);
         if (curl_errno($ch)) {
             echo 'Erro no cURL: ' . curl_error($ch);
