@@ -8,6 +8,9 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
 
 
 ?>
+<head>
+    <link rel="stylesheet" href="cardapio.css">
+</head>
 <nav class="navbar navbar-expand-lg bg-body-tertiary p-3 mb-5">
   <div class="container">
     <div class="col-6">
