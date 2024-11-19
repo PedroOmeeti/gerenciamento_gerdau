@@ -18,6 +18,8 @@ $ingredientes = $cardapio->ListarIngredientes();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Ingrediente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -27,7 +29,7 @@ $ingredientes = $cardapio->ListarIngredientes();
         <div class="row mt-4">
             <h1 class="text-center">Ingredientes Cadastrados</h1>
         </div>
-        <h1>Adicionar Ingrediente</h1>
+        <h1 class="mt-4">Adicionar Ingrediente</h1>
         <form action="../../model/actions/adicionarIngredientes_controller.php" method="POST">
             <div class="form-group">
                 <div class="row mt-4">
@@ -90,14 +92,49 @@ $ingredientes = $cardapio->ListarIngredientes();
                             <td><?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?></td>
                             <td><?php echo htmlspecialchars($ingrediente['nome_ingrediente']); ?></td>
                             <td>
-                                <a role="button" type="button" class="btn btn-outline-primary btn-sm" 
-                                   href="../cardapio/modificarIngrediente.php?id_ingrediente=<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>">
-                                   Editar
-                                </a>
+                                <!-- <a role="button" type="button" class="btn btn-outline-primary btn-sm"
+                                    href="../cardapio/modificarIngrediente.php?id_ingrediente=<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>">
+                                    Editar
+                                </a> -->
+                                <!-- Button trigger modal -->
+                                <button type="button"
+                                    class="btn btn-outline-primary btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editarIngredienteModal"
+                                    data-id="<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>"
+                                    data-nome="<?php echo htmlspecialchars($ingrediente['nome_ingrediente']); ?>">
+                                    Editar
+                                </button>
+
+
+                                <div class="modal fade" id="editarIngredienteModal" tabindex="-1" aria-labelledby="editarIngredienteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="../../model/actions/editarIngrediente_controller.php" method="POST">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="editarIngredienteModalLabel">Editar Ingrediente</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" id="editId" name="id_ingrediente">
+                                                    <div class="mb-3">
+                                                        <label for="editNome" class="form-label">Nome do Ingrediente:</label>
+                                                        <input type="text" class="form-control" id="editNome" name="nome_ingrediente" required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-danger btn-sm" 
-                                        onclick="confirmDelete('<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>')">
+                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="confirmDelete('<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>')">
                                     Deletar
                                 </button>
                             </td>
@@ -132,7 +169,21 @@ $ingredientes = $cardapio->ListarIngredientes();
             }
         </script>
     </div>
+    <script>
+        const editarIngredienteModal = document.getElementById('editarIngredienteModal');
+        editarIngredienteModal.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget; // Botão que acionou o modal
+            const id = button.getAttribute('data-id');
+            const nome = button.getAttribute('data-nome');
 
+            // Preencher os campos do modal
+            const editIdInput = editarIngredienteModal.querySelector('#editId');
+            const editNomeInput = editarIngredienteModal.querySelector('#editNome');
+
+            editIdInput.value = id;
+            editNomeInput.value = nome;
+        });
+    </script>
     <?php require_once('../components/Rodape.php'); ?>
 </body>
 
