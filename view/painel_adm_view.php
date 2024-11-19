@@ -10,10 +10,8 @@
   $cardapio = new Cardapio();
 
   $estrelas = [5, 4, 3, 2, 1];
+    $totalPessoas = $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'];
     
-    foreach ($estrelas as $estrela) {
-      print_r(${"estrela{$estrela}"} = $cardapio->listarTotalPorEstrela($estrela)['dados'][0] );
-    }
   
  //qtd_votos * 100  / total_votos
   
@@ -36,14 +34,14 @@
       google.charts.setOnLoadCallback(drawStuff);
 
       function drawStuff() {
-        <?php ?>
+        
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
-          ["5 Estrelas", 44],
-          ["4 Estrelas", 31],
-          ["3 Estrelas", 12],
-          ["2 Estrelas", 10],
-          ['1 Estrelas', 3]
+          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
         ]);
 
         var options = {
@@ -98,6 +96,135 @@
 
         chart2.draw(data, options);
       }
+
+      // google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff2);
+
+      function drawStuff2() {
+        
+        var data = new google.visualization.arrayToDataTable([
+          ['Avaliações', 'Porcentagem'],
+          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+        ]);
+
+        var options = {
+          title: 'Pesquisa de Satisfação',
+          width: 700,
+          legend: { position: 'none' },
+          chart: { title: 'Pesquisa de Satisfação',
+                   subtitle: 'Satafisfação a partir de porcentagem' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Porcentagem'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart3 = new google.charts.Bar(document.getElementById('top_x_div2'));
+        chart3.draw(data, options);
+      };
+
+      google.charts.setOnLoadCallback(drawStuff3);
+
+      function drawStuff3() {
+        
+        var data = new google.visualization.arrayToDataTable([
+          ['Avaliações', 'Porcentagem'],
+          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+        ]);
+
+        var options = {
+          title: 'Pesquisa de Satisfação',
+          width: 700,
+          legend: { position: 'none' },
+          chart: { title: 'Pesquisa de Satisfação',
+                   subtitle: 'Satafisfação a partir de porcentagem' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Porcentagem'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart4 = new google.charts.Bar(document.getElementById('top_x_div3'));
+        chart4.draw(data, options);
+      };
+      
+      google.charts.setOnLoadCallback(drawStuff4);
+
+      function drawStuff4() {
+        
+        var data = new google.visualization.arrayToDataTable([
+          ['Avaliações', 'Porcentagem'],
+          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+        ]);
+
+        var options = {
+          title: 'Pesquisa de Satisfação',
+          width: 700,
+          legend: { position: 'none' },
+          chart: { title: 'Pesquisa de Satisfação',
+                   subtitle: 'Satafisfação a partir de porcentagem' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Porcentagem'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart5 = new google.charts.Bar(document.getElementById('top_x_div4'));
+        chart5.draw(data, options);
+      };
+
+      google.charts.setOnLoadCallback(drawStuff5);
+
+      function drawStuff5() {
+        
+        var data = new google.visualization.arrayToDataTable([
+          ['Avaliações', 'Porcentagem'],
+          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
+          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+        ]);
+
+        var options = {
+          title: 'Pesquisa de Satisfação',
+          width: 700,
+          legend: { position: 'none' },
+          chart: { title: 'Pesquisa de Satisfação',
+                   subtitle: 'Satafisfação a partir de porcentagem' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Porcentagem'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart6 = new google.charts.Bar(document.getElementById('top_x_div5'));
+        chart6.draw(data, options);
+      };
     </script>
    
     <script type="text/javascript">
@@ -119,10 +246,15 @@
     </div>
     <div class="row">
       <div class="col">
-        <p class="text-center fs-5">Análise de dados relacionados ao cardápio</p>
+        <h3 class="text-center">Análise de dados relacionados ao cardápio</h3>
       </div>
     </div>
     <div class="row">
+      <div class="col">
+        <p class="text-center fs-5 mt-3">Total de avaliações: <?= $totalPessoas ?></p>
+      </div>
+    </div>
+    <div class="row my-5">
       <div class="col d-flex justify-content-center">
         <div id="top_x_div" style="width: 700px; height: 450px;"></div>
       </div>
@@ -132,15 +264,33 @@
     </div>
     <div class="row">
       <div class="col">
-
+        <h3 class="text-center my-5">Análise de dados relacionados ao cardápio</h3>
+      </div>
+    </div>
+    
+    <div class="row my-5">
+      <div class="col d-flex justify-content-center">
+        <div id="top_x_div2" style="width: 700px; height: 450px;"></div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div id="top_x_div3" style="width: 700px; height: 450px;"></div>
       </div>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
+  <div class="container">
+    <hr>
+  </div>
+  <div class="container-fluid">
+    <div class="row my-5">
+      <div class="col d-flex justify-content-center">
+        <div id="top_x_div4" style="width: 700px; height: 450px;"></div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div id="top_x_div5" style="width: 700px; height: 450px;"></div>
+      </div>
+    </div>
+  </div>
+  
   <?php
   require_once ('./components/Rodape.php');
   ?>
