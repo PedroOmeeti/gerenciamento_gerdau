@@ -111,9 +111,11 @@ class Cardapio
         curl_close($ch);
         return $response_data;
     }
+
+    
     public function AdicionarIngredientes($nome_ingrediente)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarIngredientes_controller.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarIngrediente.php";
     
         // Dados enviados no corpo da requisição
         $dados = http_build_query(array(

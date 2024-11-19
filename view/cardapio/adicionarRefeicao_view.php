@@ -21,7 +21,7 @@ $ingredientes = $cardapio->ListarIngredientes();
   <title>Cardápio</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -67,41 +67,18 @@ $ingredientes = $cardapio->ListarIngredientes();
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Adicionar ingredientes
-</button>
-<!-- data aqui -->
+      <a href="adicionarIngredientes_view.php" class="btn btn-primary mt-2">
+        Adicionar ingredientes
+      </a>      
       <div class="form-group mt-3">
         <label for="data">Data</label>
         <input type="date" value="" class="form-control" id="data_cardapio" name="data_cardapio">
       </div>
 
       <button type="submit" class="btn btn-primary mt-4">Adicionar</button>
-      <!-- Button trigger modal -->
+     
 
-   
-      <!-- Modal -->
-<form action="../../model/actions/adicionarIngrediente_controller.php" method="POST">
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Adicionar Ingredientes</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" id="nome_ingrediente" name="nome_ingrediente" placeholder="Nome do ingrediente" required>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="submit" class="btn btn-primary">Salvar alterações</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </body>
 
 </html>

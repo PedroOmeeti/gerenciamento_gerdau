@@ -5,7 +5,7 @@ if (!isset($_SESSION['token'])) {
   exit();
 }
 
-require_once('../classes/cardapio_model.php');
+require_once('./classes/cardapio_model.php');
 $cardapio = new Cardapio();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,6 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-header("location: ../../view/cardapio.php");
+header("location: ../../view/cardapio/adicionarIngredientes_view.php");
 exit();
 ?>
