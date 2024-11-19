@@ -5,7 +5,6 @@ $caminho_pagina = $raiz . 'view';
 $data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : date('Y-m-d');
 $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d', strtotime('+7 days'));
 ?>
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary p-3 mb-5">
   <div class="container">
     <div class="col-6">
@@ -26,6 +25,10 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
         <li class="nav-item">
           <a class="nav-link fs-5 <?php if (basename($_SERVER['REQUEST_URI']) == 'cardapio_view.php') echo 'active'; ?>" 
              href="<?= $caminho_pagina; ?>../../model/actions/cardapio_controller.php?data_inicial=<?= $data_inicial ?>&data_final=<?= $data_final ?>">Cardápio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fs-5 <?php if (basename($_SERVER['REQUEST_URI']) == 'cozinha_view.php') echo 'active'; ?>" 
+             href="<?= $caminho_pagina; ?>/cardapio/cozinha_view.php">Cozinha</a>
         </li>
         <li class="nav-item">
           <a class="nav-link fs-5 <?php if (basename($_SERVER['REQUEST_URI']) == 'funcionario_view.php') echo 'active'; ?>" 
@@ -67,3 +70,4 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
     </div>
   </div>
 </nav>
+
