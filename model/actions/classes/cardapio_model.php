@@ -112,6 +112,76 @@ class Cardapio
         return $response_data;
     }
 
+    public function AdicionarIngredientes($nome_ingrediente)
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarIngrediente.php";
+    
+        // Dados enviados no corpo da requisição
+        $dados = http_build_query(array(
+            "nome_ingrediente" => $nome_ingrediente,
+        ));
+    
+        // Verificação da sessão
+        $this->verificarSessao();
+    
+        // Inicializa o cURL
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization: ' . $this->token 
+        ));
+    
+        // Executa a requisição
+        $resultado = curl_exec($ch);
+    
+        if (curl_errno($ch)) {
+            echo 'Erro no cURL: ' . curl_error($ch);
+            curl_close($ch);
+            return null;
+        }
+    
+        // Fecha a conexão cURL
+        curl_close($ch);
+    
+        // Decodifica a resposta JSON
+        $response_data = json_decode($resultado, true);
+    
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo "Erro ao decodificar a resposta da API: " . json_last_error_msg();
+            return null;
+        }
+    
+        // Processa a resposta da API
+        if (isset($response_data['sucesso']) && $response_data['sucesso'] === true) {
+            echo "Cadastro realizado com sucesso!";
+        } else {
+            if (isset($response_data['mensagem'])) {
+                echo "Erro no cadastro: " . $response_data['mensagem'];
+            } else {
+                echo "Erro no cadastro: resposta inesperada.";
+            }
+        }
+    
+        // Atualiza o token, se estiver presente na resposta
+        if (isset($response_data['token']['token'])) {
+            $_SESSION['token'] = $response_data['token']['token'];
+        }
+    
+        return $response_data;
+    }
+    
+    
+    
+    public function ModificarIngrediente($id_ingrediente, $nome_ingrediente)
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/modificarIngrediente.php";
+        $dados = http_build_query(array(
+            "id_ingrediente" => $id_ingrediente,
+            "nome_ingrediente" => $nome_ingrediente
+
     public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido) {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
 
@@ -166,9 +236,41 @@ class Cardapio
 
         $dados = http_build_query(array(
             "nota_pedido" => $nota_pedido
+
         ));
 
         $this ->verificarSessao();
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization:' . $this->token 
+        ));
+        $resultado = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo 'Erro no cURL: ' . curl_error($ch);
+        } else {
+            $response_data = json_decode($resultado, true);
+            if (isset($response_data->sucesso) && $response_data->sucesso == true) {
+                echo "Ingrediente modificado com sucesso!";
+            } else {
+                if (isset($response_data->mensagem)) {
+                    echo "Erro no modificar: " . $response_data->mensagem;
+                } else {
+                    echo "Erro no modificar: resposta inesperada.";
+                }
+            }
+        }
+        if (isset($resultado['token']['token'])) {
+            $_SESSION['token'] = $resultado['token']['token'];
+        }
+        curl_close($ch);
+        return $response_data;
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -207,6 +309,7 @@ class Cardapio
         }
 
         return $resultado;
+
     }
     public function ListarPrato()
     {
@@ -453,4 +556,59 @@ class Cardapio
 
         return $resultado;
     }
+
+    public function ExcluirIngrediente($id_ingrediente)
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirIngrediente.php";
+
+
+        $dados = http_build_query(array(
+            "id_ingrediente" => $id_ingrediente
+
+        ));
+
+        $this ->verificarSessao();
+
+        $curl = curl_init($url);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_POST => true,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $dados,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Authorization:' . $this->token 
+            ),
+        ));
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            error_log('Curl error: ' . curl_error($curl));
+        } else {
+            error_log('Resposta da API: ' . $response);
+        }
+        curl_close($curl);
+
+        // Decodificando a resposta
+        $resultado = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('Erro no JSON: ' . json_last_error_msg());
+        } else {
+            error_log('Resposta decodificada: ' . print_r($resultado, true));
+        }
+
+        if (isset($resultado['token']['token'])) {
+            $_SESSION['token'] = $resultado['token']['token'];
+        }
+
+        return $resultado;
+    }
 }
+
+
+

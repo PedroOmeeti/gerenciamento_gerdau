@@ -16,6 +16,7 @@ $lista_funcionarios = $usuario->listarUsuario();
     <title>Funcionário</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="funcionario.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 
 <body>
@@ -65,7 +66,6 @@ $lista_funcionarios = $usuario->listarUsuario();
             <div class="table_component mt-4" role="region" tabindex="0">
                 <table>
                     <thead>
-
                         <tr>
                             <th>id</th>
                             <th>Nome</th>
@@ -83,7 +83,9 @@ $lista_funcionarios = $usuario->listarUsuario();
                                 <td><?php echo htmlspecialchars($funcionario['email_usuario']); ?></td>
                                 <td><?php echo htmlspecialchars($funcionario['chapa_usuario']); ?></td>
                                 <td><a role="button" type="button" class="btn btn-outline-primary" href="<?php echo $caminho_pagina; ?>/usuario/editarFuncionario_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Editar</a></td>
-                                <td><a role="button" type="button" class="btn btn-outline-danger" href="<?php echo $caminho_pagina; ?>../../model/actions/deletarUsuario_controller.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Deletar</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('<?php echo htmlspecialchars($funcionario['id_usuario']); ?>')">Deletar</button>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -93,6 +95,40 @@ $lista_funcionarios = $usuario->listarUsuario();
     </div>
 
     <?php require_once('../components/Rodape.php'); ?>
+
+    <script>
+    function confirmDelete(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-primary mx-2", 
+                cancelButton: "btn btn-danger mx-2"   
+            },
+            buttonsStyling: false 
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Tem certeza?",
+            text: "Você não poderá reverter essa ação!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sim, deletar!",
+            cancelButtonText: "Não, cancelar!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirecionar para o controlador de exclusão
+                window.location.href = "<?php echo $caminho_pagina; ?>../../model/actions/deletarUsuario_controller.php?id_usuario=" + idUsuario;
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelado",
+                    text: "O funcionário não foi excluído :)",
+                    icon: "error"
+                });
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>
