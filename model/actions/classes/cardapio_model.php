@@ -224,47 +224,16 @@ class Cardapio
         return $resultado;
     }
 
-    public function listarTotalPorEstrela($nota_pedido) {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarTotalPorEstrela.php";
-
+    public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido) {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
+ 
         $dados = http_build_query(array(
+            "id_prato" => $id_prato,
             "nota_pedido" => $nota_pedido
-
         ));
-
+ 
         $this ->verificarSessao();
-
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/x-www-form-urlencoded',
-            'Authorization:' . $this->token 
-        ));
-        $resultado = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            echo 'Erro no cURL: ' . curl_error($ch);
-        } else {
-            $response_data = json_decode($resultado, true);
-            if (isset($response_data->sucesso) && $response_data->sucesso == true) {
-                echo "Ingrediente modificado com sucesso!";
-            } else {
-                if (isset($response_data->mensagem)) {
-                    echo "Erro no modificar: " . $response_data->mensagem;
-                } else {
-                    echo "Erro no modificar: resposta inesperada.";
-                }
-            }
-        }
-        if (isset($resultado['token']['token'])) {
-            $_SESSION['token'] = $resultado['token']['token'];
-        }
-        curl_close($ch);
-        return $response_data;
-
+ 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
@@ -288,7 +257,7 @@ class Cardapio
             error_log('Resposta da API: ' . $response);
         }
         curl_close($curl);
-
+ 
         // Decodificando a resposta
         $resultado = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -296,13 +265,60 @@ class Cardapio
         } else {
             error_log('Resposta decodificada: ' . print_r($resultado, true));
         }
-
+ 
         if (isset($resultado['token']['token'])) {
             $_SESSION['token'] = $resultado['token']['token'];
         }
-
+ 
         return $resultado;
-
+    }
+ 
+    public function listarTotalPorEstrela($nota_pedido) {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarTotalPorEstrela.php";
+ 
+        $dados = http_build_query(array(
+            "nota_pedido" => $nota_pedido
+        ));
+ 
+        $this ->verificarSessao();
+ 
+        $curl = curl_init($url);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $dados,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Authorization:' . $this->token
+            )
+        ));
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            error_log('Curl error: ' . curl_error($curl));
+        } else {
+            error_log('Resposta da API: ' . $response);
+        }
+        curl_close($curl);
+ 
+        // Decodificando a resposta
+        $resultado = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('Erro no JSON: ' . json_last_error_msg());
+        } else {
+            error_log('Resposta decodificada: ' . print_r($resultado, true));
+        }
+ 
+        if (isset($resultado['token']['token'])) {
+            $_SESSION['token'] = $resultado['token']['token'];
+        }
+ 
+        return $resultado;
     }
     public function ListarPrato()
     {
