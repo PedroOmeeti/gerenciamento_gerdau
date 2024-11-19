@@ -4,6 +4,7 @@ if (!isset($_SESSION['token'])) {
     header("location: ../../index.php");
     exit();
 }
+
 //listar pratos
 require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
@@ -11,6 +12,7 @@ $ingredientes = $cardapio->ListarIngredientes();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +26,6 @@ $ingredientes = $cardapio->ListarIngredientes();
     <div class="container">
         <div class="row mt-4">
             <h1 class="text-center">Ingredientes Cadastrados</h1>
-
         </div>
         <h1>Adicionar Ingrediente</h1>
         <form action="../../model/actions/adicionarIngredientes_controller.php" method="POST">
@@ -33,47 +34,44 @@ $ingredientes = $cardapio->ListarIngredientes();
                     <div class="col-8">
                         <label for="nome_ingrediente">Nome do Ingrediente:</label>
                         <input type="text" class="form-control" id="nome_ingrediente" name="nome_ingrediente" required>
-
                     </div>
                 </div>
 
                 <div class="col-4">
                     <input type="submit" class="btn btn-primary mt-2" value="Adicionar" style="width: 100px;">
                 </div>
-
             </div>
-
         </form>
 
         <style>
-           .table_component {
-                    overflow: auto;
-                    width: 100%;
-                }
+            .table_component {
+                overflow: auto;
+                width: 100%;
+            }
 
-                .table_component table {
-                    border: 1px double #dededf;
-                    width: 100%;
-                    table-layout: auto;
-                    border-collapse: collapse;
-                    text-align: left;
-                }
+            .table_component table {
+                border: 1px double #dededf;
+                width: 100%;
+                table-layout: auto;
+                border-collapse: collapse;
+                text-align: left;
+            }
 
-                .table_component th,
-                .table_component td {
-                    border: 1px double #dededf;
-                    padding: 9px;
-                }
+            .table_component th,
+            .table_component td {
+                border: 1px double #dededf;
+                padding: 9px;
+            }
 
-                .table_component th {
-                    background-color: #eceff1;
-                    color: #000;
-                }
+            .table_component th {
+                background-color: #eceff1;
+                color: #000;
+            }
 
-                .table_component td {
-                    background-color: #fff;
-                    color: #000;
-                }
+            .table_component td {
+                background-color: #fff;
+                color: #000;
+            }
         </style>
 
         <div class="table_component mt-5 mb-5" role="region" tabindex="0">
@@ -84,7 +82,6 @@ $ingredientes = $cardapio->ListarIngredientes();
                         <th>Nome do Ingrediente</th>
                         <th style="width: 100px;">Editar</th>
                         <th style="width: 100px;">Deletar</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -92,22 +89,51 @@ $ingredientes = $cardapio->ListarIngredientes();
                         <tr>
                             <td><?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?></td>
                             <td><?php echo htmlspecialchars($ingrediente['nome_ingrediente']); ?></td>
-                            <td><a role="button" type="button" class="btn btn-outline-primary btn-sm" href="<?php echo $caminho_pagina; ?>/usuario/editarFuncionario_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Editar</a></td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('<?php echo htmlspecialchars($funcionario['id_usuario']); ?>')">Deletar</button>
-                                </td>
+                            <td>
+                                <a role="button" type="button" class="btn btn-outline-primary btn-sm" 
+                                   href="../cardapio/modificarIngrediente.php?id_ingrediente=<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>">
+                                   Editar
+                                </a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger btn-sm" 
+                                        onclick="confirmDelete('<?php echo htmlspecialchars($ingrediente['id_ingrediente']); ?>')">
+                                    Deletar
+                                </button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
 
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: 'Tem certeza?',
+                    text: "Você não poderá reverter essa ação!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, deletar!',
+                    cancelButtonText: 'Não, cancelar!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `../../model/actions/deletarIngrediente_controller.php?id_ingrediente=${id}`;
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire(
+                            'Cancelado',
+                            'O ingrediente não foi deletado :)',
+                            'error'
+                        );
+                    }
+                });
+            }
+        </script>
     </div>
 
     <?php require_once('../components/Rodape.php'); ?>
-
 </body>
 
 </html>
-
