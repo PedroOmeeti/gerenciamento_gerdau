@@ -34,6 +34,7 @@ class Usuario
             $token = $resultado['token'];
 
             session_start();
+            setcookie('nome_user', $resultado['nome_usuario'], time() + (86400 * 30), "/");
             $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
             $_SESSION['email'] = $resultado['email_usuario'];
             $_SESSION['id'] = $resultado['id'];
