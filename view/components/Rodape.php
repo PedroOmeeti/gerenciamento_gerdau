@@ -5,7 +5,7 @@ $caminho_pagina = $raiz.'view';
 ?>
 
 <link rel="stylesheet" href="./style/rodape.css">
-<div class="div">
+<div class="div mt-5">
   <footer class="rodape bg-dark text-center text-white">
     <div class="container p-4 pb-0">
       <section class="mb-4">
