@@ -182,14 +182,7 @@ class Cardapio
             "id_ingrediente" => $id_ingrediente,
             "nome_ingrediente" => $nome_ingrediente
 
-    public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido) {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
-
-        $dados = http_build_query(array(
-            "id_prato" => $id_prato,
-            "nota_pedido" => $nota_pedido
         ));
-
         $this ->verificarSessao();
 
         $curl = curl_init($url);
@@ -608,6 +601,9 @@ class Cardapio
 
         return $resultado;
     }
+
+
+    
 }
 
 
