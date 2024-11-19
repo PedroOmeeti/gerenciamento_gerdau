@@ -103,8 +103,10 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
 
             if (isset($lista_periodo['dados']) && is_array($lista_periodo['dados']) && count($lista_periodo['dados']) > 0): ?>
                 <?php $cont = 1; ?>
+                <?php $exibiu_prato = false; // Variável de controle ?>
                 <?php foreach ($lista_periodo['dados'] as $prato): ?>
                     <?php if (is_array($prato)): ?>
+                        <?php $exibiu_prato = true; // Indica que ao menos um prato foi exibido ?>
                         <?php if ($cont == 1): ?>
                             <?php
                             $ultima_data = $prato['data_cardapio'] ?? null;
@@ -157,11 +159,22 @@ if (!isset($lista_periodo['dados']) || count($lista_periodo['dados']) == 0) {
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
+                <?php if (!$exibiu_prato): // Exibe mensagem se nenhum prato foi exibido ?>
+                    <div class="row justify-content-center mt-4">
+                        <div class="card text-center border border-warning bg-light p-3" style="max-width: 400px;">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">Cardápio Indisponível</h5>
+                                <p class="card-text">Nenhum prato foi encontrado para o período selecionado.</p>
+                                <a href="adicionarRefeicao_view.php" class="btn btn-warning">Adicionar Refeição</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php else: ?>
                 <div class="row justify-content-center mt-4">
                     <div class="card text-center border border-warning bg-light p-3" style="max-width: 400px;">
                         <div class="card-body">
-                            <h5 class="card-title text-warning">Cardápio Indisponível</h5>
+                            <h5 class="card-title text-dark">Cardápio Indisponível</h5>
                             <p class="card-text">Nenhum prato foi encontrado para o período selecionado.</p>
                             <a href="adicionarRefeicao_view.php" class="btn btn-warning">Adicionar Refeição</a>
                         </div>
