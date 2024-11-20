@@ -29,7 +29,7 @@ $caminho_pagina = $raiz.'view';
         <img src="<?php $raiz;?>assets/images/logo_grsa_original.png" class="card-img-top d-block m-auto logo mt-3" alt="logo">
         <div class="card-body">
           <div class="col">
-            <form action="/gerenciamento_gerdau/model/actions/loginUsuario.php" method="POST">
+            <form action="<?php $raiz;?>model/actions/loginUsuario.php" method="POST">
               <div class="text-center">
                 <h1 class="fw-bold">Login</h1>
               </div>
