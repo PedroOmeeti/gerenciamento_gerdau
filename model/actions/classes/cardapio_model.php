@@ -18,7 +18,7 @@ class Cardapio
 
     public function ListarPeriodo($data_inicial, $data_final)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarCardapioPeriodo.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarCardapioPeriodo.php";
 
 
 
@@ -75,7 +75,7 @@ class Cardapio
 
     public function AdicionarItem($id_prato, $id_ingrediente, $data_cardapio)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarItemCardapio.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/adicionarItemCardapio.php";
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
             "id_ingrediente" => $id_ingrediente,
@@ -114,7 +114,7 @@ class Cardapio
 
     public function AdicionarIngredientes($nome_ingrediente)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/adicionarIngrediente.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/adicionarIngrediente.php";
     
         // Dados enviados no corpo da requisição
         $dados = http_build_query(array(
@@ -177,7 +177,7 @@ class Cardapio
     
     public function ModificarIngrediente($id_ingrediente, $nome_ingrediente)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/modificarIngrediente.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/modificarIngrediente.php";
         $dados = http_build_query(array(
             "id_ingrediente" => $id_ingrediente,
             "nome_ingrediente" => $nome_ingrediente
@@ -225,7 +225,7 @@ class Cardapio
     }
 
     public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido) {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarQtdEstrelaPorPrato.php";
  
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
@@ -274,7 +274,7 @@ class Cardapio
     }
  
     public function listarTotalPorEstrela($nota_pedido) {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarTotalPorEstrela.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarTotalPorEstrela.php";
  
         $dados = http_build_query(array(
             "nota_pedido" => $nota_pedido
@@ -322,7 +322,7 @@ class Cardapio
     }
     public function ListarPrato()
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratos.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarPratos.php";
 
         $this ->verificarSessao();
 
@@ -367,7 +367,7 @@ class Cardapio
 
     public function ListarIngredientes()
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarIngredientes.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarIngredientes.php";
 
         $this ->verificarSessao();
 
@@ -412,7 +412,7 @@ class Cardapio
 
     public function ListarCardapioPorDia($data_cardapio)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarCardapioPorDia.php?data_cardapio=" . urlencode($data_cardapio);
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarCardapioPorDia.php?data_cardapio=" . urlencode($data_cardapio);
 
 
         $dados = http_build_query(array(
@@ -462,7 +462,7 @@ class Cardapio
     }
     public function ListarPratoPorDia($data_cardapio, $id_prato)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarPratoCardapioDia.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarPratoCardapioDia.php";
 
 
         $dados = http_build_query(array(
@@ -515,7 +515,7 @@ class Cardapio
 
     public function ExcluirCardapioId($id_prato, $data_cardapio)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirPratoCardapioDia.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/excluirPratoCardapioDia.php";
 
 
         $dados = http_build_query(array(
@@ -568,12 +568,63 @@ class Cardapio
 
     public function ExcluirIngrediente($id_ingrediente)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirIngrediente.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/excluirIngrediente.php";
 
 
         $dados = http_build_query(array(
             "id_ingrediente" => $id_ingrediente
 
+        ));
+
+        $this ->verificarSessao();
+
+        $curl = curl_init($url);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_POST => true,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $dados,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Authorization:' . $this->token 
+            ),
+        ));
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            error_log('Curl error: ' . curl_error($curl));
+        } else {
+            error_log('Resposta da API: ' . $response);
+        }
+        curl_close($curl);
+
+        // Decodificando a resposta
+        $resultado = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('Erro no JSON: ' . json_last_error_msg());
+        } else {
+            error_log('Resposta decodificada: ' . print_r($resultado, true));
+        }
+
+        if (isset($resultado['token']['token'])) {
+            $_SESSION['token'] = $resultado['token']['token'];
+        }
+
+        return $resultado;
+    }
+
+    public function ListarPedidosDia($data_agendamento)
+    {
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarPedidosDoDia.php";
+
+
+        $dados = http_build_query(array(
+            "data_agendamento" => $data_agendamento,
         ));
 
         $this ->verificarSessao();
