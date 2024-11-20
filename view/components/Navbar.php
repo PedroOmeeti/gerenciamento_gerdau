@@ -28,6 +28,10 @@ $data_final = isset($_POST['data_final']) ? $_POST['data_final'] : date('Y-m-d',
              href="<?= $caminho_pagina; ?>../../model/actions/cardapio_controller.php?data_inicial=<?= $data_inicial ?>&data_final=<?= $data_final ?>">Cardápio</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link fs-5 <?php if (basename($_SERVER['REQUEST_URI']) == 'cozinha_view.php') echo 'active'; ?>"
+             href="<?= $caminho_pagina; ?>../../model/actions/cozinha_controller.php">Cozinha</a>
+        </li> 
+        <li class="nav-item"> 
           <a class="nav-link fs-5 <?php if (basename($_SERVER['REQUEST_URI']) == 'funcionario_view.php') echo 'active'; ?>" 
              href="<?= $caminho_pagina; ?>/usuario/funcionario_view.php">Funcionários</a>
         </li>
