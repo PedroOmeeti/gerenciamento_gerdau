@@ -26,7 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica se o novo email foi fornecido
     if ($novo_email) {
+
         // Chama a função para editar o email
+
+
        $usuario->EditarEmailUsuario($novo_email, $id_usuario);
         header('Location: funcionario_view.php'); 
         exit;
@@ -38,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 
-
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
@@ -110,8 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .container {
             margin-top: 50px;
         }
-
-       
     </style>
 </head>
 
@@ -133,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h5 class="mb-0">Formulário de Edição</h5>
                     </div>
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form id="editForm" action="" method="POST">
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome"
@@ -153,13 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Digite a senha novamente</label>
+                                <label for="doubpassword" class="form-label">Digite a senha novamente</label>
                                 <input type="password" class="form-control" id="doubpassword" name="doubpassword"
                                     placeholder="Digite sua nova senha" required>
                             </div>
 
-
-                            <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
+                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                                data-bs-target="#confirmModal">Salvar Alterações</button>
                         </form>
                     </div>
                 </div>
@@ -167,7 +166,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Alterações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja salvar as alterações feitas?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Sim, salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Enviar o formulário após a confirmação
+        document.getElementById('confirmButton').addEventListener('click', function () {
+            document.getElementById('editForm').submit();
+        });
+    </script>
 
     <?php require_once('../components/Rodape.php'); ?>
 </body>
