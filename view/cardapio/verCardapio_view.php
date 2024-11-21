@@ -1,104 +1,80 @@
 <?php
-session_start();
-if (!isset($_SESSION['token'])) {
-  header("location: index.php");
-  exit();
+$raiz = 'http://' . $_SERVER['SERVER_NAME'] . '/gerenciamento_gerdau/';
+$caminho_pagina = $raiz . 'model/actions/';
+
+if (isset($_GET['id_prato']) && !empty($_GET['id_prato']) && isset($_GET['data_cardapio']) && !empty($_GET['data_cardapio'])) {
+    $id_prato = $_GET['id_prato'];
+    $data_cardapio = $_GET['data_cardapio'];
+    $data_cardapio = str_replace('-', '/', date('d-m-Y', strtotime($data_cardapio)));
+} else {
+    die('Erro: Nenhum ID de prato ou data de cardápio foi fornecido.');
 }
 
-// Listar pratos e ingredientes
 require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
 
-$pratos = $cardapio->ListarPrato();
-$ingredientes = $cardapio->ListarIngredientes();
+$prato = $cardapio->ListarPratoPorDia($data_cardapio, $id_prato)['dados'][0];
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cardápio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Cardápio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="cardapio.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body style="background-color: #f8f9fa;">
-  <?php require_once('../components/Navbar.php'); ?>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-header text-white" style="background-color: #B49C5E;">
-            <h4 class="mb-0">Adicionar Refeição</h4>
-          </div>
-          <div class="card-body">
-            <form action="../../model/actions/adicionarCardapio_controller.php" method="POST">
-              <!-- Seção de pratos -->
-              <div class="form-group">
-                <label for="id_prato">Prato:</label>
-                <?php if (!empty($pratos['dados'])) { ?>
-                  <select class="form-select" id="id_prato" name="id_prato" required>
-                    <?php foreach ($pratos['dados'] as $prato) { ?>
-                      <option value="<?= $prato['id_prato'] ?>"><?= $prato['nome_prato'] ?></option>
-                    <?php } ?>
-                  </select>
-                <?php } else { ?>
-                  <p class="text-danger">Nenhum prato disponível. <a href="adicionarPrato_view.php">Adicionar prato</a></p>
-                <?php } ?>
-              </div>
+<body>
+    <?php require_once('../components/Navbar.php'); ?>
 
-              <!-- Seção de ingredientes -->
-              <div class="form-group mt-3">
-                <label for="id_ingrediente">Ingredientes:</label>
-                <?php if (!empty($ingredientes['dados'])) { ?>
-                  <div class="row">
-                    <div class="col">
-                      <?php foreach (array_slice($ingredientes['dados'], 0, ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
-                          <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
-                            <?= $ingrediente['nome_ingrediente'] ?>
-                          </label>
-                        </div>
-                      <?php } ?>
-                    </div>
-                    <div class="col">
-                      <?php foreach (array_slice($ingredientes['dados'], ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
-                          <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
-                            <?= $ingrediente['nome_ingrediente'] ?>
-                          </label>
-                        </div>
-                      <?php } ?>
-                    </div>
-                  </div>
-                <?php } else { ?>
-                  <p class="text-danger">Nenhum ingrediente disponível. <a href="adicionarIngredientes_view.php">Adicionar ingredientes</a></p>
-                <?php } ?>
-              </div>
-
-              <!-- Link para adicionar ingredientes -->
-              <a href="adicionarIngredientes_view.php" class="btn btn-secondary mt-3">
-                Adicionar ingredientes
-              </a>
-
-              <!-- Campo de data -->
-              <div class="form-group mt-3">
-                <label for="data_cardapio">Data:</label>
-                <input type="date" value="<?= date('Y-m-d') ?>" class="form-control" id="data_cardapio" name="data_cardapio">
-              </div>
-
-              <!-- Botão de submit -->
-              <button type="submit" class="btn mt-4 text-white" style="background-color: #B49C5E;">Adicionar</button>
-            </form>
-          </div>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col text-center">
+                <h1 class="display-4">Detalhes do Prato</h1>
+            </div>
         </div>
-      </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="card border-dark shadow-lg">
+                    <div class="card-header text-center" style="background-color: #B49C5E; color: white;">
+                        <h5 class="card-title"><?= htmlspecialchars($prato['descricao_prato']) ?></h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Ingredientes:</strong> <?= htmlspecialchars($prato['ingredientes']) ?></p>
+                        <p class="card-text"><strong>Data do cardápio:</strong> <?= htmlspecialchars($prato['data_cardapio']) ?></p>
+                        <div class="d-flex justify-content-around mt-4">
+                            <a href="cardapio_view.php" class="btn btn-secondary">Voltar</a>
+                            <button class="btn btn-danger" id="delete-btn">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script>
+        document.getElementById('delete-btn').addEventListener('click', function () {
+            Swal.fire({
+                title: "Tem certeza?",
+                text: "Essa ação não poderá ser revertida!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, excluir!",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "../../model/actions/excluirCardapio_controller.php?data_cardapio=<?= htmlspecialchars($prato['data_cardapio']); ?>&id_prato=<?= htmlspecialchars($prato['id_prato']); ?>";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
