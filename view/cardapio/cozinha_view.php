@@ -9,8 +9,6 @@ require_once('../../model/actions/classes/cardapio_model.php');
 
 $cardapio = new Cardapio();
 $data_agendamento = isset($_GET['data_agendamento']) ? $_GET['data_agendamento'] : null;
-
-
 $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
 ?>
 
@@ -45,8 +43,9 @@ $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
                         <div class="col">
                             <form id="form-cardapio" method="GET" action="../../model/actions/cozinha_controller.php">
                                 <div class="row p-2 d-flex text-center">
-                                    <div class="col fs-5 align-items-center">Selecione a data:
-                                        <input type="date" id="data_agendamento" name="data_agendamento" value="<?= date('Y-m-d') ?>">
+                                    <div class="row fs-5 d-flex justify-content-center">Selecione a data:</div>
+                                    <div class="col fs-5 align-items-center ">
+                                        <input type="date" id="data_agendamento" name="data_agendamento" value="<?= $data_agendamento ? date('Y-m-d', strtotime(str_replace('/', '-', $data_agendamento))) : date('Y-m-d') ?>">
                                         <button class="btn btn-secondary" type="button" onclick="document.getElementById('data_agendamento').stepDown()">&lt;</button>
                                         <button class="btn btn-secondary" type="button" onclick="document.getElementById('data_agendamento').stepUp()">&gt;</button>
                                     </div>
@@ -67,7 +66,7 @@ $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
             <?php if ($data_agendamento == date('d/m/Y')): ?>
                 <h4 class="mt-4">Pedidos de hoje</h4>
             <?php else: ?>
-                <h4 class="mt-4">Pedidos de <?= date('d/m/Y', strtotime($data_agendamento)) ?></h4>
+                <h4 class="mt-4">Pedidos de <?= date('d/m/Y', strtotime(str_replace('/', '-', $data_agendamento))) ?> </h4>
             <?php endif; ?>
         </div>
 
@@ -94,7 +93,7 @@ $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
                     echo '<h5 class="card-title">' . $pedido['prato'] . '</h5>';
                     echo '</div>';
                     echo '<div class="card-body">';
-                    echo '<p class="card-text">Quantidade: <strong>' . $pedido['quantidade_pedidos'] . '</strong></p>';
+                    echo '<p class="card-text fs-5">Quantidade de pedidos: <strong>' . $pedido['quantidade_pedidos'] . '</strong></p>';
                     echo '<div class="d-flex justify-content-between">';
                     echo '</div>';
                     echo '</div>';
