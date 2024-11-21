@@ -48,7 +48,7 @@ $usuariosFiltrados = obterNomesUsuarios($idsUsuarios, $listaFuncionarios);
 <body>
     <?php require_once('../components/Navbar.php'); ?>
 
-    <div class="container mt-5">
+    <div class="container mt-5" style="height: 61vh">
         <div class="row">
             <div class="col">
                 <h1 class="text-center mb-4">Detalhes do Prato <?php echo htmlspecialchars($prato); ?></h1>

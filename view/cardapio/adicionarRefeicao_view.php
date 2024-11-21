@@ -4,7 +4,8 @@ if (!isset($_SESSION['token'])) {
   header("location: index.php");
   exit();
 }
-//listar pratos
+
+// Listar pratos e ingredientes
 require_once('../../model/actions/classes/cardapio_model.php');
 $cardapio = new Cardapio();
 
@@ -15,75 +16,79 @@ $ingredientes = $cardapio->ListarIngredientes();
 <html lang="pt-br">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cardápio</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cardápio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 
-
 <body>
-
   <?php require_once('../components/Navbar.php'); ?>
-  <div class="container">
-    <h1>Adicionar refeição</h1>
+  <div class="container mt-4">
+    <h1>Adicionar Refeição</h1>
     <form action="../../model/actions/adicionarCardapio_controller.php" method="POST">
+      <!-- Seção de pratos -->
       <div class="form-group">
-        <label for="permissao">Prato:</label>
-        <select class="form-select" id="id_prato" name="id_prato" required>
-          <?php foreach ($pratos['dados'] as $prato) { ?>
-            <option value="<?= $prato['id_prato'] ?>"><?= $prato['nome_prato'] ?></option>
-          <?php } ?>
-        </select>
+        <label for="id_prato">Prato:</label>
+        <?php if (!empty($pratos['dados'])) { ?>
+          <select class="form-select" id="id_prato" name="id_prato" required>
+            <?php foreach ($pratos['dados'] as $prato) { ?>
+              <option value="<?= $prato['id_prato'] ?>"><?= $prato['nome_prato'] ?></option>
+            <?php } ?>
+          </select>
+        <?php } else { ?>
+          <p class="text-danger">Nenhum prato disponível. <a href="adicionarPrato_view.php">Adicionar prato</a></p>
+        <?php } ?>
       </div>
+
+      <!-- Seção de ingredientes -->
       <div class="form-group mt-3">
-        <label for="permissao">ingredientes:</label>
-        <div class="row">
-          <div class="col">
-            <?php foreach (array_slice($ingredientes['dados'], 0, ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
-                <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
-                  <?= $ingrediente['nome_ingrediente'] ?>
-
-                </label>
-              </div>
-
-            <?php } ?>
+        <label for="id_ingrediente">Ingredientes:</label>
+        <?php if (!empty($ingredientes['dados'])) { ?>
+          <div class="row">
+            <div class="col">
+              <?php foreach (array_slice($ingredientes['dados'], 0, ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
+                  <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
+                    <?= $ingrediente['nome_ingrediente'] ?>
+                  </label>
+                </div>
+              <?php } ?>
+            </div>
+            <div class="col">
+              <?php foreach (array_slice($ingredientes['dados'], ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
+                  <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
+                    <?= $ingrediente['nome_ingrediente'] ?>
+                  </label>
+                </div>
+              <?php } ?>
+            </div>
           </div>
-          <div class="col">
-            <?php foreach (array_slice($ingredientes['dados'], ceil(count($ingredientes['dados']) / 2)) as $ingrediente) { ?>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="<?= $ingrediente['id_ingrediente'] ?>" id="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>" name="id_ingrediente[]">
-                <label class="form-check-label" for="id_ingrediente_<?= $ingrediente['id_ingrediente'] ?>">
-                  <?= $ingrediente['nome_ingrediente'] ?>
-                </label>
-              </div>
-            <?php } ?>
-          </div>
-        </div>
+        <?php } else { ?>
+          <p class="text-danger">Nenhum ingrediente disponível. <a href="adicionarIngredientes_view.php">Adicionar ingredientes</a></p>
+        <?php } ?>
       </div>
 
-      <a href="adicionarIngredientes_view.php" style="background-color: #B49C5E; color: white" class="btn mt-2">
+      <!-- Link para adicionar ingredientes -->
+      <a href="adicionarIngredientes_view.php" class="btn mt-2" style="background-color: #B49C5E; color: white">
         Adicionar ingredientes
-      </a>      <div class="form-group mt-3">
-        <label for="data">Data</label>
+      </a>
+
+      <!-- Campo de data -->
+      <div class="form-group mt-3">
+        <label for="data_cardapio">Data:</label>
         <input type="date" value="<?= date('Y-m-d') ?>" class="form-control" id="data_cardapio" name="data_cardapio">
       </div>
 
-      <button type="submit" style="background-color: #B49C5E; color: white" class="btn mt-4">Adicionar</button>
-
-
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <!-- Botão de submit -->
+      <button type="submit" class="btn mt-4" style="background-color: #B49C5E; color: white">Adicionar</button>
+    </form>
+  </div>
 </body>
 
 </html>
