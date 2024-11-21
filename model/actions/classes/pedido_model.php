@@ -16,7 +16,7 @@
 
       public function ListarTotalPedidosPratoPorData($id_prato, $data_inicial, $data_final) 
       {
-        $url = "http://192.168.56.1/api-gerdau/endpoints/listarTotalPedidosPratoPorData.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarTotalPedidosPratoPorData.php";
 
 
 
@@ -69,7 +69,7 @@
       }
 
       public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido, $data_inicial, $data_final) {
-        $url = "http://192.168.56.1/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
  
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
