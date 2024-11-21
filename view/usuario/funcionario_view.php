@@ -82,7 +82,7 @@ $lista_funcionarios = $usuario->listarUsuario();
                                 <td><?php echo htmlspecialchars($funcionario['nome_usuario']); ?></td>
                                 <td><?php echo htmlspecialchars($funcionario['email_usuario']); ?></td>
                                 <td><?php echo htmlspecialchars($funcionario['chapa_usuario']); ?></td>
-                                <td><a role="button" type="button" class="btn btn-outline-primary" href="<?php echo $caminho_pagina; ?>/usuario/editarFuncionario_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Editar</a></td>
+                                <td><a role="button" type="button" class="btn btn-outline-primary" href="<?php echo $caminho_pagina; ?>/usuario/editarCredencial_view.php?id_usuario=<?php echo htmlspecialchars($funcionario['id_usuario']); ?>">Editar</a></td>
                                 <td>
                                     <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('<?php echo htmlspecialchars($funcionario['id_usuario']); ?>')">Deletar</button>
                                 </td>

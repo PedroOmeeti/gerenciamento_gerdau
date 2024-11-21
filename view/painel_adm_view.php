@@ -8,14 +8,56 @@
 
   require_once('../model/actions/classes/cardapio_model.php');
   $cardapio = new Cardapio();
+  require_once('../model/actions/classes/pedido_model.php');
+  $pedido = new Pedido();
 
-  $estrelas = [5, 4, 3, 2, 1];
-    $totalPessoas = $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'];
-    
+  
+  
+
+  // $data_inicial = $_GET['data_inicial'] ?? date('Y-m-d', strtotime('-7 days'));
+  // $data_final = $_GET['data_final'] ?? date('Y-m-d');
+
+  
+  $data_inicial = isset($_GET['data_inicial']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_inicial']))) : str_replace('-', '/', date('d/m/Y', strtotime('-7 days')));
+  $data_final = isset($_GET['data_final']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_final']))) : str_replace('-', '/', date('d/m/Y'));
+
+ 
+
+  
+  $totalPessoas = $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'];
+
+  $totalPessoasPrato1 = $pedido->ListarTotalPedidosPratoPorData(1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos']; 
+
+  if($totalPessoasPrato1 == 0) {
+    $totalPessoasPrato1 = 1;
+  }
+
+  $totalPessoasPrato2 = $pedido->ListarTotalPedidosPratoPorData(2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
+  // print_r($totalPessoasPrato2);
+
+  if($totalPessoasPrato2 == 0) {
+    $totalPessoasPrato2 = 1;
+  }
+
+  $totalPessoasPrato3 = $pedido->ListarTotalPedidosPratoPorData(3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
+  // print_r($totalPessoasPrato3);
+
+  if($totalPessoasPrato3 == 0) {
+    $totalPessoasPrato3 = 1;
+  }
+
+  $totalPessoasPrato4 = $pedido->ListarTotalPedidosPratoPorData(4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
+  // print_r($totalPessoasPrato4);
+
+  if($totalPessoasPrato4 == 0) {
+    $totalPessoasPrato4 = 1;
+  }
+
+  
   
  //qtd_votos * 100  / total_votos
   
-
+ 
 ?>
 
 <!DOCTYPE html>
@@ -97,25 +139,24 @@
         chart2.draw(data, options);
       }
 
-      // google.charts.load('current', {'packages':['bar']});
+      // DIA A DIA
       google.charts.setOnLoadCallback(drawStuff2);
-
       function drawStuff2() {
         
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
-          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+          ["5 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(1, 5, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato1; ?>],
+          ["4 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(1, 4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato1; ?>],
+          ["3 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(1, 3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato1; ?>],
+          ["2 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(1, 2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato1; ?>],
+          ['1 Estrelas', <?= $pedido->listarQtdEstrelaPorPrato(1, 1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato1; ?>]
         ]);
 
         var options = {
-          title: 'Pesquisa de Satisfação',
+          title: 'Pesquisa de Satisfação do Prato Dia-a-Dia',
           width: 700,
           legend: { position: 'none' },
-          chart: { title: 'Pesquisa de Satisfação',
+          chart: { title: 'Pesquisa de Satisfação do Prato Dia-a-Dia',
                    subtitle: 'Satafisfação a partir de porcentagem' },
           bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
@@ -130,24 +171,24 @@
         chart3.draw(data, options);
       };
 
+      // ESPECIALE
       google.charts.setOnLoadCallback(drawStuff3);
-
       function drawStuff3() {
         
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
-          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+          ["5 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(2, 5, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato2; ?>],
+          ["4 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(2, 4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato2; ?>],
+          ["3 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(2, 3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato2; ?>],
+          ["2 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(2, 2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato2; ?>],
+          ['1 Estrelas', <?= $pedido->listarQtdEstrelaPorPrato(2, 1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato2; ?>]
         ]);
 
         var options = {
-          title: 'Pesquisa de Satisfação',
+          title: 'Pesquisa de Satisfação do Prato Especiale',
           width: 700,
           legend: { position: 'none' },
-          chart: { title: 'Pesquisa de Satisfação',
+          chart: { title: 'Pesquisa de Satisfação do Prato Especiale',
                    subtitle: 'Satafisfação a partir de porcentagem' },
           bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
@@ -168,18 +209,18 @@
         
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
-          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+          ["5 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(3, 5, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato3; ?>],
+          ["4 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(3, 4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato3; ?>],
+          ["3 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(3, 3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato3; ?>],
+          ["2 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(3, 2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato3; ?>],
+          ['1 Estrelas', <?= $pedido->listarQtdEstrelaPorPrato(3, 1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato3; ?>]
         ]);
 
         var options = {
-          title: 'Pesquisa de Satisfação',
+          title: 'Pesquisa de Satisfação do Prato Clássico',
           width: 700,
           legend: { position: 'none' },
-          chart: { title: 'Pesquisa de Satisfação',
+          chart: { title: 'Pesquisa de Satisfação do Prato Clássico',
                    subtitle: 'Satafisfação a partir de porcentagem' },
           bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
@@ -200,18 +241,18 @@
         
         var data = new google.visualization.arrayToDataTable([
           ['Avaliações', 'Porcentagem'],
-          ["5 Estrelas", <?= $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["4 Estrelas", <?= $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["3 Estrelas", <?= $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ["2 Estrelas", <?= $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>],
-          ['1 Estrelas', <?= $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoas; ?>]
+          ["5 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(4, 5, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato4; ?>],
+          ["4 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(4, 4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato4; ?>],
+          ["3 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(4, 3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato4; ?>],
+          ["2 Estrelas", <?= $pedido->listarQtdEstrelaPorPrato(4, 2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato4; ?>],
+          ['1 Estrelas', <?= $pedido->listarQtdEstrelaPorPrato(4, 1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'] * 100 / $totalPessoasPrato4; ?>]
         ]);
 
         var options = {
-          title: 'Pesquisa de Satisfação',
+          title: 'Pesquisa de Satisfação do Prato Natural',
           width: 700,
           legend: { position: 'none' },
-          chart: { title: 'Pesquisa de Satisfação',
+          chart: { title: 'Pesquisa de Satisfação do Prato Natural',
                    subtitle: 'Satafisfação a partir de porcentagem' },
           bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
@@ -265,6 +306,38 @@
     <div class="row">
       <div class="col">
         <h3 class="text-center my-5">Análise de dados relacionados ao cardápio</h3>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="menu border border-2 rounded-4 p-3 bg-body-dark">
+              <div class="row d-flex align-items-center justify-content-center">
+                  <div class="col">
+
+                  </div>
+                  <div class="col"> 
+                      <form id="form-cardapio" method="POST" action="../model/actions/listarQtdEstrelaPorPrato.php">
+                          <div class="row p-2 d-flex text-center">
+                              <div class="col">Data inicial:
+                                  <input type="date" id="data_inicial" name="data_inicial" value="<?= $data_inicial ?>">
+                              </div>
+                              <div class="col">Data final:
+                                  <input type="date" id="data_final" name="data_final" value="<?= $data_final ?>">
+                              </div>
+                          </div>
+                          <div class="row text-center">
+                              <div class="col">
+                                  <button class="btn" style="background-color: #B49C5E; color: white" type="submit" id="exibir-cardapio">Exibir Dados</button>
+  
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="col"></div>
+              </div>
+          </div>
+        </div> 
       </div>
     </div>
     
