@@ -86,9 +86,8 @@ class Usuario
     }
 
     public function EditarEmailUsuario($email, $id)
-
-{
-    $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
 
 
     session_start();
