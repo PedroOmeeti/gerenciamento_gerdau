@@ -5,7 +5,7 @@ class Usuario
 {
     public function Logar($email, $senha)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/loginPorEmail.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/loginPorEmail.php";
         $dados = http_build_query(array(
             "email_usuario" => $email,
             "senha_usuario" => $senha,
@@ -34,6 +34,7 @@ class Usuario
             $token = $resultado['token'];
 
             session_start();
+            setcookie('nome_user', $resultado['nome_usuario'], time() + (86400 * 30), "/");
             $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
             $_SESSION['email'] = $resultado['email_usuario'];
             $_SESSION['id'] = $resultado['id'];
@@ -51,7 +52,7 @@ class Usuario
 
     public function Cadastrar($email, $senha, $nome, $chapa, $permissao)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/cadastrarUsuario.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/cadastrarUsuario.php";
 
         $dados = http_build_query(array(
             "email_usuario" => $email,
@@ -86,7 +87,7 @@ class Usuario
 
     public function EditarEmailUsuario($email, $id)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/alterarEmailUsuario.php";
 
         session_start();
         if (isset($_SESSION['token'])) {
@@ -130,7 +131,7 @@ class Usuario
 
     public function EditarSenhaUsuario($senha, $id)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarSenhaUsuario.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/alterarSenhaUsuario.php";
 
         session_start();
         if (isset($_SESSION['token'])) {
@@ -174,7 +175,7 @@ class Usuario
 
     public function ListarUsuario()
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarUsuarios.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/listarUsuarios.php";
 
         session_start();
         if (isset($_SESSION['token'])) {
@@ -224,7 +225,7 @@ class Usuario
 
     public function deletarUsuario($id)
     {
-        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/excluirUsuario.php";
+        $url = "http://192.168.4.8/api-gerdau-oficial/endpoints/excluirUsuario.php";
 
         $dados = http_build_query(array(
             "id_usuario" => $id
