@@ -45,7 +45,8 @@ $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
                         <div class="col">
                             <form id="form-cardapio" method="GET" action="../../model/actions/cozinha_controller.php">
                                 <div class="row p-2 d-flex text-center">
-                                    <div class="col fs-5 align-items-center">Selecione a data:
+                                    <div class="row fs-5 d-flex justify-content-center">Selecione a data:</div>
+                                    <div class="col fs-5 align-items-center ">
                                         <input type="date" id="data_agendamento" name="data_agendamento" value="<?= date('Y-m-d') ?>">
                                         <button class="btn btn-secondary" type="button" onclick="document.getElementById('data_agendamento').stepDown()">&lt;</button>
                                         <button class="btn btn-secondary" type="button" onclick="document.getElementById('data_agendamento').stepUp()">&gt;</button>
@@ -94,7 +95,7 @@ $pedidoDia = $cardapio->ListarPedidosDia($data_agendamento);
                     echo '<h5 class="card-title">' . $pedido['prato'] . '</h5>';
                     echo '</div>';
                     echo '<div class="card-body">';
-                    echo '<p class="card-text">Quantidade: <strong>' . $pedido['quantidade_pedidos'] . '</strong></p>';
+                    echo '<p class="card-text fs-5">Quantidade de pedidos: <strong>' . $pedido['quantidade_pedidos'] . '</strong></p>';
                     echo '<div class="d-flex justify-content-between">';
                     echo '</div>';
                     echo '</div>';
