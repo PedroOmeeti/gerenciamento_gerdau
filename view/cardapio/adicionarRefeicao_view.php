@@ -77,7 +77,7 @@ $ingredientes = $cardapio->ListarIngredientes();
         Adicionar ingredientes
       </a>      <div class="form-group mt-3">
         <label for="data">Data</label>
-        <input type="date" value="" class="form-control" id="data_cardapio" name="data_cardapio">
+        <input type="date" value="<?= date('Y-m-d') ?>" class="form-control" id="data_cardapio" name="data_cardapio">
       </div>
 
       <button type="submit" style="background-color: #B49C5E; color: white" class="btn mt-4">Adicionar</button>
