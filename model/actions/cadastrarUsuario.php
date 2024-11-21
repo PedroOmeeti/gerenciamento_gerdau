@@ -18,7 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = new Usuario();
 
     // Chamar o método Cadastrar
-    $usuario->Cadastrar($email, $senha, $nome, $chapa, $permissao);
-    header("location: ../../view/usuario/cadastrarUsuario_view.php");
+    $resultado = $usuario->Cadastrar($email, $senha, $nome, $chapa, $permissao);
+    
+    if ($resultado) {
+        header("location: ../../view/usuario/cadastrarUsuario_view.php?cadastro=0");
+        exit();
+    } else {
+        header("location: ../../view/usuario/cadastrarUsuario_view.php?cadastro=1");
+        exit();
+    }
 }
 ?>
+
