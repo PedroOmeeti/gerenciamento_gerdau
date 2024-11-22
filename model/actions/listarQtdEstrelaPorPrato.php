@@ -25,7 +25,7 @@ if ($data_inicial && $data_final) {
     $data_inicial_formatada = $data_inicial_obj->format('d/m/Y');
     $data_final_formatada = $data_final_obj->format('d/m/Y');
 
-    // $lista_periodo = $pedido->ListarQtdEstrelaPorPrato($id_prato, $nota_pedido, $data_inicial_formatada, $data_final_formatada);  dsakjhdkjh 
+    // $lista_periodo = $pedido->ListarQtdEstrelaPorPrato($id_prato, $nota_pedido, $data_inicial_formatada, $data_final_formatada); 
 
     if (isset($lista_periodo['erro'])) {
         error_log("Erro ao listar cardápio: " . $lista_periodo['erro']);
