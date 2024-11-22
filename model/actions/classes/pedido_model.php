@@ -68,12 +68,11 @@
     
       }
 
-      public function listarQtdEstrelaPorPrato($id_prato, $nota_pedido, $data_inicial, $data_final) {
+      public function listarQtdEstrelaPorPrato($id_prato, $data_inicial, $data_final) {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarQtdEstrelaPorPrato.php";
  
         $dados = http_build_query(array(
             "id_prato" => $id_prato,
-            "nota_pedido" => $nota_pedido,
             "data_inicial" => $data_inicial,
             "data_final" => $data_final
         ));
