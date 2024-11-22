@@ -27,31 +27,31 @@ $data_final = isset($_GET['data_final']) ? date('d/m/Y', strtotime(str_replace('
 $totalPessoas = $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'];
 
 $totalPessoasPrato1 = $pedido->ListarTotalPedidosPratoPorData(1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato1);
-if ($totalPessoasPrato1 == 0) {
-  $totalPessoasPrato1 = 1;
-}
+
+// if ($totalPessoasPrato1 == 0) {
+//   $totalPessoasPrato1 = 1;
+// }
 
 $totalPessoasPrato2 = $pedido->ListarTotalPedidosPratoPorData(2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato2);
 
-if ($totalPessoasPrato2 == 0) {
-  $totalPessoasPrato2 = 1;
-}
+
+// if ($totalPessoasPrato2 == 0) {
+//   $totalPessoasPrato2 = 1;
+// }
 
 $totalPessoasPrato3 = $pedido->ListarTotalPedidosPratoPorData(3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato3);
 
-if ($totalPessoasPrato3 == 0) {
-  $totalPessoasPrato3 = 1;
-}
+
+// if ($totalPessoasPrato3 == 0) {
+//   $totalPessoasPrato3 = 1;
+// }
 
 $totalPessoasPrato4 = $pedido->ListarTotalPedidosPratoPorData(4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato4);
 
-if ($totalPessoasPrato4 == 0) {
-  $totalPessoasPrato4 = 1;
-}
+
+// if ($totalPessoasPrato4 == 0) {
+//   $totalPessoasPrato4 = 1;
+// }
 
 
 
@@ -162,13 +162,17 @@ if ($totalPessoasPrato4 == 0) {
       ?>
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
+        <?php if(count($listaLegal) > 0){ ?>
         <?php foreach($listaLegal['dados'] as $dados) { ?>
           <?php if($dados['nota_pedido'] != 0){ ?>
           ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
           <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
-        <?php } ?>
-        <?php } ?>
+            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ],
+            <?php } ?>
+            <?php } ?>
+        <?php }else{ ?>
+          ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+          <?php } ?>
         
       ]);
 
@@ -206,17 +210,22 @@ if ($totalPessoasPrato4 == 0) {
     function drawStuff3() {
 
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial, $data_final);
+        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(2, $data_inicial, $data_final);
+        //print_r($listaLegal);
       ?>
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
+        <?php if(count($listaLegal) > 0){ ?>
         <?php foreach($listaLegal['dados'] as $dados) { ?>
           <?php if($dados['nota_pedido'] != 0){ ?>
           ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
           <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
-        <?php } ?>
-        <?php } ?>
+            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ],
+            <?php } ?>
+            <?php } ?>
+        <?php }else{ ?>
+          ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+          <?php } ?>
         
       ]);
 
@@ -253,20 +262,26 @@ if ($totalPessoasPrato4 == 0) {
     function drawStuff4() {
 
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial, $data_final);
+        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(3, $data_inicial, $data_final);
       ?>
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
+        <?php if(count($listaLegal) > 0){ ?>
         <?php foreach($listaLegal['dados'] as $dados) { ?>
           <?php if($dados['nota_pedido'] != 0){ ?>
           ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
           <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
-        <?php } ?>
-        <?php } ?>
-
+            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ],
+            <?php } ?>
+            <?php } ?>
+        <?php }else{ ?>
+          ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+          <?php } ?>
         
       ]);
+
+        
+      
 
       var options = {
         title: 'Pesquisa de Satisfação do Prato Clássico',
@@ -306,13 +321,17 @@ if ($totalPessoasPrato4 == 0) {
       
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
+        <?php if(count($listaLegal) > 0){ ?>
         <?php foreach($listaLegal['dados'] as $dados) { ?>
           <?php if($dados['nota_pedido'] != 0){ ?>
           ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
           <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
-        <?php } ?>
-        <?php } ?>
+            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ],
+            <?php } ?>
+            <?php } ?>
+        <?php }else{ ?>
+          ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+          <?php } ?>
       ]);      
 
       var options = {
