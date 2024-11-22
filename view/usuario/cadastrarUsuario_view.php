@@ -7,11 +7,29 @@
    $raiz = 'http://' . $_SERVER['SERVER_NAME'] . '/gerenciamento_gerdau/';
    $caminho_pagina = $raiz . '/model';
 
+   if (isset($_GET['cadastro'])) {
+    if ($_GET['cadastro'] == 1) {
+        echo '<div class="alert alert-success text-center" role="alert">Usuário cadastrado com sucesso!</div>';
+    } elseif ($_GET['cadastro'] == 0) {
+        echo '<div class="alert alert-danger text-center" role="alert">Erro ao cadastrar usuário. Por favor, tente novamente.</div>';
+    }
+}
+
+   if (isset($_POST['chapa'])) {
+       $chapa = $_POST['chapa'];
+       if (strlen($chapa) < 8) {
+           echo "<script>alert('A chapa precisa ter no minimo 8 caracteres');</script>";
+           exit;
+       }
+   }
+
+   
+
 
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br";
 
 <head>
     <meta charset="UTF-8">
@@ -42,7 +60,9 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="fs-5 mt-2" for="chapa"><strong>Chapa:</strong></label>
-                                            <input type="text" placeholder="Digite uma chapa" class="form-control" id="chapa" name="chapa" placeholder="1234qwer" required>
+                                            <input type="text" placeholder="Digite uma chapa (até 8 caracteres)" maxlength="8" class="form-control" id="chapa"
+                                                name="chapa" onkeyup="verificarChapa()" required>
+                                            <div id="verificacaoChapa" class="text-end text-form text-danger"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -91,6 +111,21 @@
         </div>
     </div>
     <script>
+
+        function verificarChapa() {
+            var chapa = document.getElementById("chapa").value;
+            var verificacaoChapa = document.getElementById("verificacaoChapa");
+            var botao = document.getElementById("botao");
+
+            // Verifica se a chapa tem exatamente 8 caracteres
+            if (chapa.length !== 8) {
+                verificacaoChapa.innerHTML = "A chapa deve ter exatamente 8 caracteres.";
+                botao.disabled = true; // Desabilita o botão
+            } else {
+                verificacaoChapa.innerHTML = ""; // Limpa a mensagem de erro
+                verificarSenha(); // Verifica também as senhas
+            }
+        }
       
       function verificarSenha() {
         var senha = document.getElementById("senha").value;
@@ -118,8 +153,7 @@
     </script>
     <?php
     require_once('../components/Rodape.php');
-    ?>
-
-</body>
+    ?></body>
 
 </html>
+

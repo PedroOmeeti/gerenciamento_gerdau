@@ -3,6 +3,18 @@
 
 class Usuario
 {
+    private $token;
+    private function verificarSessao(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['token'])) {
+
+            $this->token = $_SESSION['token'];
+        } else {
+            die('Token não disponível.');
+        }
+    }
     public function Logar($email, $senha)
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/loginPorEmail.php";
@@ -86,17 +98,11 @@ class Usuario
     }
 
     public function EditarEmailUsuario($email, $id)
+    {
+        $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
 
-{
-    $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarEmailUsuario.php";
 
-
-    session_start();
-    if (isset($_SESSION['token'])) {
-        $token = $_SESSION['token'];
-    } else {
-        die('Token não disponível.');
-    }
+    $this ->verificarSessao();
 
     $dados = http_build_query(array(
         "email_usuario" => $email,
@@ -112,7 +118,7 @@ class Usuario
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dados);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/x-www-form-urlencoded',
-        'Authorization: ' . $token
+        'Authorization: ' . $this->token
     ));
     $resultado = curl_exec($ch);
     
@@ -138,12 +144,7 @@ class Usuario
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/alterarSenhaUsuario.php";
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $dados = http_build_query(array(
             "senha_usuario" => $senha,
@@ -157,7 +158,7 @@ class Usuario
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: 
                 application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token
             ),
         );
         $resultado = curl_exec($ch);
@@ -182,12 +183,7 @@ class Usuario
     {
         $url = "http://10.141.46.20/gerdau-api/api-gerdau/endpoints/listarUsuarios.php";
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -202,7 +198,7 @@ class Usuario
             CURLOPT_POSTFIELDS => '',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token
             ),
         ));
         $response = curl_exec($curl);
@@ -236,12 +232,7 @@ class Usuario
             "id_usuario" => $id
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -256,7 +247,7 @@ class Usuario
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token
             ),
         ));
 
@@ -298,12 +289,7 @@ class Usuario
             "id_usuario" => $id_usuario
         ));
 
-        session_start();
-        if (isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
-        } else {
-            die('Token não disponível.');
-        }
+        $this ->verificarSessao();
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -319,7 +305,7 @@ class Usuario
             CURLOPT_POSTFIELDS => $dados,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                'Authorization:' . $token
+                'Authorization:' . $this->token
             ),
         ));
         $response = curl_exec($curl);

@@ -181,7 +181,6 @@ class Cardapio
         $dados = http_build_query(array(
             "id_ingrediente" => $id_ingrediente,
             "nome_ingrediente" => $nome_ingrediente
-
         ));
         $this ->verificarSessao();
 
