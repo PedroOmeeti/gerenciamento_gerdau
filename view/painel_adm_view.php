@@ -18,40 +18,43 @@ $pedido = new Pedido();
 // $data_final = $_GET['data_final'] ?? date('Y-m-d');
 
 date_default_timezone_set('America/Sao_Paulo');
-$data_inicial = isset($_GET['data_inicial']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_inicial']))) : str_replace('-', '/', date('d/m/Y', strtotime('-7 days')));
-$data_final = isset($_GET['data_final']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_final']))) : str_replace('-', '/', date('d/m/Y'));
+$data_inicial_formatada = isset($_GET['data_inicial']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_inicial']))) : str_replace('-', '/', date('d/m/Y', strtotime('-7 days')));
+$data_final_formatada = isset($_GET['data_final']) ? date('d/m/Y', strtotime(str_replace('/', '-', $_GET['data_final']))) : str_replace('-', '/', date('d/m/Y'));
+
+
+
 
 
 
 
 $totalPessoas = $cardapio->listarTotalPorEstrela(5)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(4)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(3)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(2)['dados'][0]['qtd_pedidos'] + $cardapio->listarTotalPorEstrela(1)['dados'][0]['qtd_pedidos'];
 
-$totalPessoasPrato1 = $pedido->ListarTotalPedidosPratoPorData(1, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato1);
-if ($totalPessoasPrato1 == 0) {
-  $totalPessoasPrato1 = 1;
-}
+$totalPessoasPrato1 = $pedido->ListarTotalPedidosPratoPorData(1, $data_inicial_formatada, $data_final_formatada)['dados'][0]['qtd_pedidos'];
 
-$totalPessoasPrato2 = $pedido->ListarTotalPedidosPratoPorData(2, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato2);
+// if ($totalPessoasPrato1 == 0) {
+//   $totalPessoasPrato1 = 1;
+// }
 
-if ($totalPessoasPrato2 == 0) {
-  $totalPessoasPrato2 = 1;
-}
+$totalPessoasPrato2 = $pedido->ListarTotalPedidosPratoPorData(2, $data_inicial_formatada, $data_final_formatada)['dados'][0]['qtd_pedidos'];
 
-$totalPessoasPrato3 = $pedido->ListarTotalPedidosPratoPorData(3, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato3);
 
-if ($totalPessoasPrato3 == 0) {
-  $totalPessoasPrato3 = 1;
-}
+// if ($totalPessoasPrato2 == 0) {
+//   $totalPessoasPrato2 = 1;
+// }
 
-$totalPessoasPrato4 = $pedido->ListarTotalPedidosPratoPorData(4, $data_inicial, $data_final)['dados'][0]['qtd_pedidos'];
-print_r($totalPessoasPrato4);
+$totalPessoasPrato3 = $pedido->ListarTotalPedidosPratoPorData(3, $data_inicial_formatada, $data_final_formatada)['dados'][0]['qtd_pedidos'];
 
-if ($totalPessoasPrato4 == 0) {
-  $totalPessoasPrato4 = 1;
-}
+
+// if ($totalPessoasPrato3 == 0) {
+//   $totalPessoasPrato3 = 1;
+// }
+
+$totalPessoasPrato4 = $pedido->ListarTotalPedidosPratoPorData(4, $data_inicial_formatada, $data_final_formatada)['dados'][0]['qtd_pedidos'];
+
+
+// if ($totalPessoasPrato4 == 0) {
+//   $totalPessoasPrato4 = 1;
+// }
 
 
 
@@ -122,9 +125,9 @@ if ($totalPessoasPrato4 == 0) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      
+
       var data = google.visualization.arrayToDataTable([
-        
+
         ['Task', 'Hours per Day'],
         ['Dia-a-Dia', 11],
         ['Speciale', 2],
@@ -158,19 +161,34 @@ if ($totalPessoasPrato4 == 0) {
 
     function drawStuff2() {
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial, $data_final);
+      $prato1 =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial_formatada, $data_final_formatada);
+      $notas = [
+        5 => 0,
+        4 => 0,
+        3 => 0,
+        2 => 0,
+        1 => 0,
+      ];
+    
+      // Preenche as notas com os valores retornados do banco de dados
+      if (!empty($prato1['dados'])) {
+          foreach ($prato1['dados'] as $dados) {
+              $nota = (int)$dados['nota_pedido'];
+              if (isset($notas[$nota]) >= 1 && isset($notas[$nota]) <= 5) {
+                  $notas[$nota] = (int)$dados['qtd_votos'];
+              }
+          }
+      }
+      
       ?>
+
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
-        <?php foreach($listaLegal['dados'] as $dados) { ?>
-          <?php if($dados['nota_pedido'] != 0){ ?>
-          ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
-          <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+        <?php foreach ($notas as $nota => $qtd_votos) { ?>
+          ["<?= $nota ?> Estrelas", <?= $qtd_votos ?>],
         <?php } ?>
-        <?php } ?>
-        
       ]);
+
 
       var options = {
         title: 'Pesquisa de Satisfação do Prato Dia-a-Dia',
@@ -206,18 +224,32 @@ if ($totalPessoasPrato4 == 0) {
     function drawStuff3() {
 
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial, $data_final);
+      $prato2 =  $pedido->listarQtdEstrelaPorPrato(2, $data_inicial_formatada, $data_final_formatada);
+      $notas = [
+        5 => 0,
+        4 => 0,
+        3 => 0,
+        2 => 0,
+        1 => 0,
+      ];
+    
+      // Preenche as notas com os valores retornados do banco de dados
+      if (!empty($prato2['dados'])) {
+          foreach ($prato2['dados'] as $dados) {
+              $nota = (int)$dados['nota_pedido'];
+              if (isset($notas[$nota]) >= 1 && isset($notas[$nota]) <= 5) {
+                  $notas[$nota] = (int)$dados['qtd_votos'];
+              }
+          }
+      }
+      
       ?>
+
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
-        <?php foreach($listaLegal['dados'] as $dados) { ?>
-          <?php if($dados['nota_pedido'] != 0){ ?>
-          ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
-          <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+        <?php foreach ($notas as $nota => $qtd_votos) { ?>
+          ["<?= $nota ?> Estrelas", <?= $qtd_votos ?>],
         <?php } ?>
-        <?php } ?>
-        
       ]);
 
       var options = {
@@ -253,20 +285,37 @@ if ($totalPessoasPrato4 == 0) {
     function drawStuff4() {
 
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(1, $data_inicial, $data_final);
+      $prato3 =  $pedido->listarQtdEstrelaPorPrato(3, $data_inicial_formatada, $data_final_formatada);
+      
+      $notas = [
+        5 => 0,
+        4 => 0,
+        3 => 0,
+        2 => 0,
+        1 => 0,
+      ];
+    
+      // Preenche as notas com os valores retornados do banco de dados
+      if (!empty($prato3['dados'])) {
+          foreach ($prato3['dados'] as $dados) {
+              $nota = (int)$dados['nota_pedido'];
+              if (isset($notas[$nota]) >= 1 && isset($notas[$nota]) <= 5) {
+                  $notas[$nota] = (int)$dados['qtd_votos'];
+              }
+          }
+      }
+      
       ?>
+
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
-        <?php foreach($listaLegal['dados'] as $dados) { ?>
-          <?php if($dados['nota_pedido'] != 0){ ?>
-          ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
-          <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+        <?php foreach ($notas as $nota => $qtd_votos) { ?>
+          ["<?= $nota ?> Estrelas", <?= $qtd_votos ?>],
         <?php } ?>
-        <?php } ?>
-
-        
       ]);
+
+
+
 
       var options = {
         title: 'Pesquisa de Satisfação do Prato Clássico',
@@ -299,21 +348,35 @@ if ($totalPessoasPrato4 == 0) {
     google.charts.setOnLoadCallback(drawStuff5);
 
     function drawStuff5() {
-      <?php $lala = '50' ?>
       <?php
-        $listaLegal =  $pedido->listarQtdEstrelaPorPrato(4, $data_inicial, $data_final);
-      ?>
+      $prato4 =  $pedido->listarQtdEstrelaPorPrato(4, $data_inicial_formatada, $data_final_formatada);
+
+      $notas = [
+        5 => 0,
+        4 => 0,
+        3 => 0,
+        2 => 0,
+        1 => 0,
+      ];
+    
+      // Preenche as notas com os valores retornados do banco de dados
+      if (!empty($prato4['dados'])) {
+          foreach ($prato4['dados'] as $dados) {
+              $nota = (int)$dados['nota_pedido'];
+              if (isset($notas[$nota]) >= 1 && isset($notas[$nota]) <= 5) {
+                  $notas[$nota] = (int)$dados['qtd_votos'];
+              }
+          }
+      }
       
+      ?>
+
       var data = new google.visualization.arrayToDataTable([
         ['Avaliações', 'Quantidade de votos'],
-        <?php foreach($listaLegal['dados'] as $dados) { ?>
-          <?php if($dados['nota_pedido'] != 0){ ?>
-          ["<?= $dados['nota_pedido'] ?> Estrelas", <?= $dados['qtd_votos'] ?>],
-          <?php } else { ?>
-            ["<?= $dados['nota_pedido'] ?> Estrelas", 0 ]
+        <?php foreach ($notas as $nota => $qtd_votos) { ?>
+          ["<?= $nota ?> Estrelas", <?= $qtd_votos ?>],
         <?php } ?>
-        <?php } ?>
-      ]);      
+      ]);
 
       var options = {
         title: 'Pesquisa de Satisfação do Prato Natural',
@@ -347,12 +410,13 @@ if ($totalPessoasPrato4 == 0) {
   <script type="text/javascript">
 
   </script>
+
 </head>
 
 <body class="overflow-auto">
   <!-- Nav -->
   <?php
-  require_once('./components/Navbar.php');
+    require_once('./components/Navbar.php');
   ?>
 
   <div class="container-fluid">
@@ -393,18 +457,18 @@ if ($totalPessoasPrato4 == 0) {
 
               </div>
               <div class="col">
-                <form id="form-cardapio" method="POST" action="../model/actions/listarQtdEstrelaPorPrato.php">
+                <form id="form-avaliacao" method="POST" action="../model/actions/listarQtdEstrelaPorPrato.php">
                   <div class="row p-2 d-flex text-center">
                     <div class="col">Data inicial:
-                      <input type="date" id="data_inicial" name="data_inicial" value="<?= $data_inicial ?>">
+                      <input type="date" id="data_inicial_formatada" name="data_inicial_formatada" value="<?= date('Y-m-d', strtotime(str_replace('/', '-', $data_inicial_formatada))) ?>">
                     </div>
                     <div class="col">Data final:
-                      <input type="date" id="data_final" name="data_final" value="<?= $data_final ?>">
+                      <input type="date" id="data_final_formatada" name="data_final_formatada" value="<?= date('Y-m-d', strtotime(str_replace('/', '-', $data_final_formatada))) ?>">
                     </div>
                   </div>
                   <div class="row text-center">
                     <div class="col">
-                      <button class="btn" style="background-color: #B49C5E; color: white" type="submit" id="exibir-cardapio">Exibir Dados</button>
+                      <button class="btn" style="background-color: #B49C5E; color: white" type="submit">Exibir Dados</button>
 
                     </div>
                   </div>
@@ -416,7 +480,11 @@ if ($totalPessoasPrato4 == 0) {
         </div>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col">
+        <h5 class="text-center my-5">Dados de avaliações dos dias de <?= $data_inicial_formatada ?> a <?= $data_final_formatada ?></h5>
+      </div>
+    </div>
     <div class="row my-5">
       <div class="col d-flex justify-content-center">
         <div id="top_x_div2" style="width: 700px; height: 450px;"></div>
@@ -439,6 +507,7 @@ if ($totalPessoasPrato4 == 0) {
       </div>
     </div>
   </div>
+  
 
   <?php
   require_once('./components/Rodape.php');
@@ -446,5 +515,4 @@ if ($totalPessoasPrato4 == 0) {
 
 
 </body>
-
 </html>
