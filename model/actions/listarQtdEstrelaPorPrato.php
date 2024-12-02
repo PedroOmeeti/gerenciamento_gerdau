@@ -12,8 +12,8 @@ require_once('classes/pedido_model.php');
 $pedido = new Pedido();
 
 // Verifica se as datas foram enviadas via POST ou GET
-$data_inicial = isset($_POST['data_inicial']) ? $_POST['data_inicial'] : (isset($_GET['data_inicial']) ? $_GET['data_inicial'] : null);
-$data_final = isset($_POST['data_final']) ? $_POST['data_final'] : (isset($_GET['data_final']) ? $_GET['data_final'] : null);
+$data_inicial = isset($_POST['data_inicial_formatada']) ? $_POST['data_inicial_formatada'] : (isset($_GET['data_inicial_formatada']) ? $_GET['data_inicial_formatada'] : null);
+$data_final = isset($_POST['data_final_formatada']) ? $_POST['data_final_formatada'] : (isset($_GET['data_final_formatada']) ? $_GET['data_final_formatada'] : null);
 
 
 // Verifica se as datas foram fornecidas
@@ -34,7 +34,7 @@ if ($data_inicial && $data_final) {
     }
 
       
-    $_SESSION['lista_periodo'] = $lista_periodo;
+    // $_SESSION['lista_periodo'] = $lista_periodo;
     
     header("Location: ../../view/painel_adm_view.php?data_inicial=".urlencode($data_inicial)."&data_final=".urlencode($data_final));
     exit();
